@@ -212,6 +212,7 @@ class Zend_Http_Response_Stream extends Zend_Http_Response
             return '';
         }
 
+        // @todo Where does $headers come from?
         if(isset($headers['content-length'])) {
             $this->body = stream_get_contents($this->stream, $headers['content-length']);
         } else {

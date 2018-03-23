@@ -99,6 +99,11 @@ class Zend_Http_Header_SetCookie
     protected $httponly = null;
 
     /**
+     * @var string
+     */
+    protected $type;
+
+    /**
      * Generate a new Cookie object from a cookie string
      * (for example the value of the Set-Cookie HTTP header)
      *
