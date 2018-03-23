@@ -19,7 +19,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Http/UserAgent/Features/Adapter/Browscap.php';
 
 /**
  * @category   Zend

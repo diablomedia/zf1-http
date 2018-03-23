@@ -20,7 +20,6 @@
  * @version    $Id$
  */
 
-require_once 'Zend/Http/Client.php';
 
 /**
  * @category   Zend

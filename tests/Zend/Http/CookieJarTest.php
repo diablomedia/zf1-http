@@ -20,7 +20,6 @@
  * @version    $Id$
  */
 
-require_once 'Zend/Http/CookieJar.php';
 
 /**
  * Zend_Http_CookieJar unit tests
@@ -71,19 +70,20 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
     {
         $jar = new Zend_Http_CookieJar();
 
-        try {
-            $jar->addCookie('garbage');
-            $this->fail('Expected exception was not thrown');
-        } catch (Zend_Http_Exception $e) {
-            // We are ok
-        }
+        $this->expectException(Zend_Http_Exception::class);
+        $jar->addCookie('garbage');
+    }
 
-        try {
-            $jar->addCookie(new Zend_Http_CookieJar());
-            $this->fail('Expected exception was not thrown');
-        } catch (Zend_Http_Exception $e) {
-            // We are ok
-        }
+    /**
+     * Check we get an expection if a non-valid cookie is passed to addCookie
+     *
+     */
+    public function testExceptAddInvalidCookieFromEmptyJar()
+    {
+        $jar = new Zend_Http_CookieJar();
+
+        $this->expectException(Zend_Http_Exception::class);
+        $jar->addCookie(new Zend_Http_CookieJar());
     }
 
     /**
@@ -265,19 +265,21 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
         $jar = new Zend_Http_CookieJar();
         $jar->addCookie($cookie);
 
-        try {
-            $jar->getCookie('foo.com', 'foo');
-            $this->fail('Expected getCookie to throw exception, invalid URI string passed');
-        } catch (Zend_Exception $e) {
-            // We are ok!
-        }
+        $this->expectException(Zend_Exception::class);
+        $jar->getCookie('foo.com', 'foo');
+    }
 
-        try {
-            $jar->getCookie(Zend_Uri::factory('mailto:nobody@dev.null.com'), 'foo');
-            $this->fail('Expected getCookie to throw exception, invalid URI object passed');
-        } catch (Zend_Exception $e) {
-            // We are ok!
-        }
+    /**
+     * Test we get a proper exception when an invalid URI is passed
+     */
+    public function testExceptGetCookieInvalidUri2()
+    {
+        $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=www.example.com; path=/tests');
+        $jar = new Zend_Http_CookieJar();
+        $jar->addCookie($cookie);
+
+        $this->expectException(Zend_Exception::class);
+        $jar->getCookie(Zend_Uri::factory('mailto:nobody@dev.null.com'), 'foo');
     }
 
     /**
@@ -290,12 +292,8 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
         $jar = new Zend_Http_CookieJar();
         $jar->addCookie($cookie);
 
-        try {
-            $jar->getCookie('http://example.com/', 'foo', 5);
-            $this->fail('Expected getCookie to throw exception, invalid return type');
-        } catch (Zend_Http_Exception $e) {
-            // We are ok!
-        }
+        $this->expectException(Zend_Http_Exception::class);
+        $jar->getCookie('http://example.com/', 'foo', 5);
     }
 
     /**
@@ -434,19 +432,19 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
     {
         $jar = new Zend_Http_CookieJar();
 
-        try {
-            $cookies = $jar->getMatchingCookies('invalid.com', true, Zend_Http_CookieJar::COOKIE_STRING_ARRAY);
-            $this->fail('Expected getMatchingCookies to throw exception, invalid URI string passed');
-        } catch (Zend_Exception $e) {
-            // We are ok!
-        }
+        $this->expectException(Zend_Exception::class);
+        $cookies = $jar->getMatchingCookies('invalid.com', true, Zend_Http_CookieJar::COOKIE_STRING_ARRAY);
+    }
 
-        try {
-            $cookies = $jar->getMatchingCookies(new stdClass(), true, Zend_Http_CookieJar::COOKIE_STRING_ARRAY);
-            $this->fail('Expected getCookie to throw exception, invalid URI object passed');
-        } catch (Zend_Exception $e) {
-            // We are ok!
-        }
+    /**
+     * Test we get a proper exception when an invalid URI is passed
+     */
+    public function testExceptGetMatchingCookiesInvalidUri2()
+    {
+        $jar = new Zend_Http_CookieJar();
+
+        $this->expectException(Zend_Exception::class);
+        $cookies = $jar->getMatchingCookies(new stdClass(), true, Zend_Http_CookieJar::COOKIE_STRING_ARRAY);
     }
 
     /**

@@ -20,7 +20,6 @@
  * @version    $Id$
  */
 
-require_once 'Zend/Http/Cookie.php';
 
 /**
  * Zend_Http_Cookie unit tests
@@ -214,9 +213,7 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
     public function testGetExpiryTime($cStr, $cInfo)
     {
         $cookie = Zend_Http_Cookie::fromString($cStr);
-        if (! $cookie instanceof Zend_Http_Cookie) {
-            $this->fail("Failed creating a cookie object from '$cStr'");
-        }
+        $this->assertInstanceOf(Zend_Http_Cookie::class, $cookie, "Failed creating a cookie object from '$cStr'");
 
         if (isset($cInfo['expires'])) {
             $this->assertEquals($cInfo['expires'], $cookie->getExpiryTime());

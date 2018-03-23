@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Zend/Loader/Autoloader.php';
 Zend_Loader_Autoloader::getInstance();
 $autoloader = Zend_Loader_Autoloader::getInstance();
 
@@ -53,7 +52,7 @@ function printBrowserDetails($browser)
         print "<li>Server Platform Version: " . $device->getFeature('server_platfom_version') . "</li>";
         print "</ul>";
         print '</fieldset>';
-        
+
         $wurfl = $device->getFeature("brand_name");
         if (!$wurfl) {
             print "<fieldset><legend><b>no WURFL identification</b></legend>";
@@ -73,7 +72,7 @@ function printBrowserDetails($browser)
             print "</ul>";
             print '</fieldset>';
         }
-        
+
         print "<fieldset><legend><b>Full</b></legend>";
         Zend_Debug::dump($device->getAllFeatures());
         print '</fieldset>';
@@ -82,9 +81,9 @@ function printBrowserDetails($browser)
 }
 
 $options = array(
-    '', 
-    'mobile, text, desktop', 
-    'bot, mobile, validator, checker, console, offline, email, text', 
+    '',
+    'mobile, text, desktop',
+    'bot, mobile, validator, checker, console, offline, email, text',
     'text, bot, validator, checker, console, offline, email'
 );
 ?>

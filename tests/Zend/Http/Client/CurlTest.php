@@ -22,8 +22,6 @@
 
 require_once dirname(__FILE__) . '/CommonHttpTests.php';
 
-require_once 'Zend/Http/Client/Adapter/Curl.php';
-
 /**
  * This Testsuite includes all Zend_Http_Client that require a working web
  * server to perform. It was designed to be extendable, so that several
@@ -94,8 +92,6 @@ class Zend_Http_Client_CurlTest extends Zend_Http_Client_CommonHttpTests
      */
     public function testConfigSetAsZendConfig()
     {
-        require_once 'Zend/Config.php';
-
         $config = new Zend_Config(array(
             'timeout'  => 400,
             'nested'   => array(

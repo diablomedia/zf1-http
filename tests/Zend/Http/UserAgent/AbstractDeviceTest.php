@@ -19,23 +19,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * Zend_Http_UserAgent
- */
-require_once 'Zend/Http/UserAgent.php';
-require_once 'Zend/Http/UserAgent/AbstractDevice.php';
-require_once 'Zend/Http/UserAgent/Bot.php';
-require_once 'Zend/Http/UserAgent/Checker.php';
-require_once 'Zend/Http/UserAgent/Console.php';
-require_once 'Zend/Http/UserAgent/Desktop.php';
-require_once 'Zend/Http/UserAgent/Email.php';
-require_once 'Zend/Http/UserAgent/Feed.php';
-require_once 'Zend/Http/UserAgent/Mobile.php';
-require_once 'Zend/Http/UserAgent/Offline.php';
-require_once 'Zend/Http/UserAgent/Probe.php';
-require_once 'Zend/Http/UserAgent/Spam.php';
-require_once 'Zend/Http/UserAgent/Text.php';
-require_once 'Zend/Http/UserAgent/Validator.php';
 
 /**
  * @category   Zend
@@ -10088,7 +10071,7 @@ audio/vnd.qcelp, application/xhtml+xml'
         $capabilities = Zend_Http_UserAgent_AbstractDevice::extractFromUserAgent($userAgent);
         $this->assertEquals('AppleWebKit', $capabilities['browser_name']);
     }
-    
+
     /**
      * @group ZF-11815
      */
@@ -10096,9 +10079,9 @@ audio/vnd.qcelp, application/xhtml+xml'
     {
         $userAgent = 'AppleCoreMedia/1.0.0.8L1 (iPhone; U; CPU OS 4_3_5 like Mac OS X; de_de)';
         $capabilities = Zend_Http_UserAgent_AbstractDevice::extractFromUserAgent($userAgent);
-        $this->assertEquals('AppleCoreMedia', $capabilities['browser_name']);        
+        $this->assertEquals('AppleCoreMedia', $capabilities['browser_name']);
     }
-    
+
     /**
      * @group ZF-11749
      */
@@ -10108,7 +10091,7 @@ audio/vnd.qcelp, application/xhtml+xml'
         $capabilities = Zend_Http_UserAgent_AbstractDevice::extractFromUserAgent($userAgent);
         $this->assertEquals('Safari Mobile', $capabilities['browser_name']);
     }
-    
+
     /**
      * @group ZF-11693
      */
@@ -10118,7 +10101,7 @@ audio/vnd.qcelp, application/xhtml+xml'
         $capabilities = Zend_Http_UserAgent_AbstractDevice::extractFromUserAgent($userAgent);
         $this->assertEquals('Mozilla', $capabilities['browser_name']);
     }
-    
+
     /**
      * @group ZF-11857
      */

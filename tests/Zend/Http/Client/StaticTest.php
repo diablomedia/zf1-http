@@ -20,9 +20,6 @@
  * @version    $Id$
  */
 
-require_once 'Zend/Http/Client.php';
-
-require_once 'Zend/Http/Client/Adapter/Test.php';
 
 /**
  * This Testsuite includes all Zend_Http_Client tests that do not rely
@@ -166,7 +163,7 @@ class Zend_Http_Client_StaticTest extends PHPUnit\Framework\TestCase
 
     /**
      * Make sure non-strict mode disables header name validation
-     *
+     * @doesNotPerformAssertions
      */
     public function testInvalidHeaderNonStrictMode()
     {
@@ -495,6 +492,7 @@ class Zend_Http_Client_StaticTest extends PHPUnit\Framework\TestCase
      * Check that we can set methods which are not documented in the RFC.
      *
      * @dataProvider validMethodProvider
+     * @doesNotPerformAssertions
      */
     public function testSettingExtendedMethod($method)
     {
@@ -632,6 +630,7 @@ class Zend_Http_Client_StaticTest extends PHPUnit\Framework\TestCase
 
     /**
      * @group ZF-8057
+     * @doesNotPerformAssertions
      */
     public function testSetDisabledAuthBeforSettingUriBug()
     {
@@ -644,6 +643,7 @@ class Zend_Http_Client_StaticTest extends PHPUnit\Framework\TestCase
      * Testing if the connection isn't closed
      *
      * @group ZF-9685
+     * @doesNotPerformAssertions
      */
     public function testOpenTempStreamWithValidFileDoesntThrowsException()
     {
@@ -674,13 +674,9 @@ class Zend_Http_Client_StaticTest extends PHPUnit\Framework\TestCase
 			'output_stream' => '/path/to/bogus/file.ext',
 		);
 		$client = new Zend_Http_Client($url, $config);
-		try {
-			$result = $client->request();
-			$this->fail('Expected exception was not thrown');
-		} catch (Zend_Http_Client_Exception $e) {
-			// we return since we expect the exception
-			return;
-		}
+
+        $this->expectException(Zend_Http_Client_Exception::class);
+		$result = $client->request();
     }
 
 	/**
@@ -721,8 +717,9 @@ class Zend_Http_Client_StaticTest extends PHPUnit\Framework\TestCase
         $client = new Zend_Http_Client($uri);
         $this->assertEquals((string)$orig, (string)$uri);
     }
-    /*
+    /**
      * @group ZF-9206
+     * @doesNotPerformAssertions
      */
     function testStreamWarningRewind()
     {
