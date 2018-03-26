@@ -15,9 +15,9 @@
         "diablomedia/zendframework1-exception": "^1.0.0",
         "diablomedia/zendframework1-config": "^1.0.0",
         "diablomedia/zendframework1-loader": "^1.0.0",
-        "diablomedia/zendframework1-date": "dev-master",
-        "diablomedia/zendframework1-session": "dev-master",
-        "diablomedia/zendframework1-uri": "dev-master"
+        "diablomedia/zendframework1-date": "^1.0.0",
+        "diablomedia/zendframework1-session": "^1.0.0",
+        "diablomedia/zendframework1-uri": "*"
     },
     "autoload": {
         "psr-0": {
