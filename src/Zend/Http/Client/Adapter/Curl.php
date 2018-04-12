@@ -118,21 +118,20 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
     {
         if ($config instanceof Zend_Config) {
             $config = $config->toArray();
-
         } elseif (! is_array($config)) {
             throw new Zend_Http_Client_Adapter_Exception(
                 'Array or Zend_Config object expected, got ' . gettype($config)
             );
         }
 
-        if(isset($config['proxy_user']) && isset($config['proxy_pass'])) {
-            $this->setCurlOption(CURLOPT_PROXYUSERPWD, $config['proxy_user'].":".$config['proxy_pass']);
+        if (isset($config['proxy_user']) && isset($config['proxy_pass'])) {
+            $this->setCurlOption(CURLOPT_PROXYUSERPWD, $config['proxy_user'] . ':' . $config['proxy_pass']);
             unset($config['proxy_user'], $config['proxy_pass']);
         }
 
         foreach ($config as $k => $v) {
             $option = strtolower($k);
-            switch($option) {
+            switch ($option) {
                 case 'proxy_host':
                     $this->setCurlOption(CURLOPT_PROXY, $v);
                     break;
@@ -153,10 +152,10 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
       *
       * @return array
       */
-     public function getConfig()
-     {
-         return $this->_config;
-     }
+    public function getConfig()
+    {
+        return $this->_config;
+    }
 
     /**
      * Direct setter for cURL adapter related options.
@@ -206,8 +205,8 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
         }
 
         // Set connection timeout
-        $connectTimeout  = $this->_config['timeout'];
-        $constant        = CURLOPT_CONNECTTIMEOUT;
+        $connectTimeout = $this->_config['timeout'];
+        $constant       = CURLOPT_CONNECTTIMEOUT;
         if (defined('CURLOPT_CONNECTTIMEOUT_MS')) {
             $connectTimeout *= 1000;
             $constant = constant('CURLOPT_CONNECTTIMEOUT_MS');
@@ -216,8 +215,8 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
 
         // Set request timeout (once connection is established)
         if (array_key_exists('request_timeout', $this->_config)) {
-            $requestTimeout  = $this->_config['request_timeout'];
-            $constant        = CURLOPT_TIMEOUT;
+            $requestTimeout = $this->_config['request_timeout'];
+            $constant       = CURLOPT_TIMEOUT;
             if (defined('CURLOPT_TIMEOUT_MS')) {
                 $requestTimeout *= 1000;
                 $constant = constant('CURLOPT_TIMEOUT_MS');
@@ -231,7 +230,7 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
         if (!$this->_curl) {
             $this->close();
 
-            throw new Zend_Http_Client_Adapter_Exception('Unable to Connect to ' .  $host . ':' . $port);
+            throw new Zend_Http_Client_Adapter_Exception('Unable to Connect to ' . $host . ':' . $port);
         }
 
         if ($secure !== false) {
@@ -263,11 +262,11 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
     {
         // Make sure we're properly connected
         if (!$this->_curl) {
-            throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are not connected");
+            throw new Zend_Http_Client_Adapter_Exception('Trying to write but we are not connected');
         }
 
         if ($this->_connected_to[0] != $uri->getHost() || $this->_connected_to[1] != $uri->getPort()) {
-            throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are connected to the wrong host");
+            throw new Zend_Http_Client_Adapter_Exception('Trying to write but we are connected to the wrong host');
         }
 
         // set URL
@@ -287,15 +286,15 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
             case Zend_Http_Client::PUT:
                 // There are two different types of PUT request, either a Raw Data string has been set
                 // or CURLOPT_INFILE and CURLOPT_INFILESIZE are used.
-                if(is_resource($body)) {
+                if (is_resource($body)) {
                     $this->_config['curloptions'][CURLOPT_INFILE] = $body;
                 }
                 if (isset($this->_config['curloptions'][CURLOPT_INFILE])) {
                     // Now we will probably already have Content-Length set, so that we have to delete it
                     // from $headers at this point:
-                    foreach ($headers AS $k => $header) {
+                    foreach ($headers as $k => $header) {
                         if (preg_match('/Content-Length:\s*(\d+)/i', $header, $m)) {
-                            if(is_resource($body)) {
+                            if (is_resource($body)) {
                                 $this->_config['curloptions'][CURLOPT_INFILESIZE] = (int)$m[1];
                             }
                             unset($headers[$k]);
@@ -303,52 +302,52 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
                     }
 
                     if (!isset($this->_config['curloptions'][CURLOPT_INFILESIZE])) {
-                        throw new Zend_Http_Client_Adapter_Exception("Cannot set a file-handle for cURL option CURLOPT_INFILE without also setting its size in CURLOPT_INFILESIZE.");
+                        throw new Zend_Http_Client_Adapter_Exception('Cannot set a file-handle for cURL option CURLOPT_INFILE without also setting its size in CURLOPT_INFILESIZE.');
                     }
 
-                    if(is_resource($body)) {
+                    if (is_resource($body)) {
                         $body = '';
                     }
 
                     $curlMethod = CURLOPT_PUT;
                 } else {
                     $curlMethod = CURLOPT_CUSTOMREQUEST;
-                    $curlValue = "PUT";
+                    $curlValue  = 'PUT';
                 }
                 break;
 
             case Zend_Http_Client::PATCH:
                 $curlMethod = CURLOPT_CUSTOMREQUEST;
-                $curlValue = "PATCH";
+                $curlValue  = 'PATCH';
                 break;
 
             case Zend_Http_Client::DELETE:
                 $curlMethod = CURLOPT_CUSTOMREQUEST;
-                $curlValue = "DELETE";
+                $curlValue  = 'DELETE';
                 break;
 
             case Zend_Http_Client::OPTIONS:
                 $curlMethod = CURLOPT_CUSTOMREQUEST;
-                $curlValue = "OPTIONS";
+                $curlValue  = 'OPTIONS';
                 break;
 
             case Zend_Http_Client::TRACE:
                 $curlMethod = CURLOPT_CUSTOMREQUEST;
-                $curlValue = "TRACE";
+                $curlValue  = 'TRACE';
                 break;
 
             case Zend_Http_Client::HEAD:
                 $curlMethod = CURLOPT_CUSTOMREQUEST;
-                $curlValue = "HEAD";
+                $curlValue  = 'HEAD';
                 break;
 
             default:
                 // For now, through an exception for unsupported request methods
-                throw new Zend_Http_Client_Adapter_Exception("Method currently not supported");
+                throw new Zend_Http_Client_Adapter_Exception('Method currently not supported');
         }
 
-        if(is_resource($body) && $curlMethod != CURLOPT_PUT) {
-            throw new Zend_Http_Client_Adapter_Exception("Streaming requests are allowed only with PUT");
+        if (is_resource($body) && $curlMethod != CURLOPT_PUT) {
+            throw new Zend_Http_Client_Adapter_Exception('Streaming requests are allowed only with PUT');
         }
 
         // get http version to use
@@ -358,10 +357,10 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
         curl_setopt($this->_curl, CURLOPT_HTTP_VERSION, $curlHttp);
         curl_setopt($this->_curl, $curlMethod, $curlValue);
 
-        if($this->out_stream) {
+        if ($this->out_stream) {
             // headers will be read into the response
             curl_setopt($this->_curl, CURLOPT_HEADER, false);
-            curl_setopt($this->_curl, CURLOPT_HEADERFUNCTION, array($this, "readHeader"));
+            curl_setopt($this->_curl, CURLOPT_HEADERFUNCTION, array($this, 'readHeader'));
             // and data will be written into the file
             curl_setopt($this->_curl, CURLOPT_FILE, $this->out_stream);
         } else {
@@ -420,15 +419,15 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
         $response = curl_exec($this->_curl);
 
         // if we used streaming, headers are already there
-        if(!is_resource($this->out_stream)) {
+        if (!is_resource($this->out_stream)) {
             $this->_response = $response;
         }
 
-        $request  = curl_getinfo($this->_curl, CURLINFO_HEADER_OUT);
+        $request = curl_getinfo($this->_curl, CURLINFO_HEADER_OUT);
         $request .= $body;
 
         if (empty($this->_response)) {
-            throw new Zend_Http_Client_Exception("Error in cURL request: " . curl_error($this->_curl));
+            throw new Zend_Http_Client_Exception('Error in cURL request: ' . curl_error($this->_curl));
         }
 
         // cURL automatically decodes chunked-messages, this means we have to disallow the Zend_Http_Response to do it again
@@ -438,12 +437,12 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
 
         // Eliminate multiple HTTP responses.
         do {
-            $parts  = preg_split('|(?:\r?\n){2}|m', $this->_response, 2);
-            $again  = false;
+            $parts = preg_split('|(?:\r?\n){2}|m', $this->_response, 2);
+            $again = false;
 
             if (isset($parts[1]) && preg_match("|^HTTP/1\.[01](.*?)\r\n|mi", $parts[1])) {
-                $this->_response    = $parts[1];
-                $again              = true;
+                $this->_response = $parts[1];
+                $again           = true;
             }
         } while ($again);
 
@@ -472,7 +471,7 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
      */
     public function close()
     {
-        if(is_resource($this->_curl)) {
+        if (is_resource($this->_curl)) {
             curl_close($this->_curl);
         }
         $this->_curl         = null;

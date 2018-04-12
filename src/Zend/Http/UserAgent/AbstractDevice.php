@@ -29,8 +29,7 @@
  * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Http_UserAgent_AbstractDevice
-    implements Zend_Http_UserAgent_Device
+abstract class Zend_Http_UserAgent_AbstractDevice implements Zend_Http_UserAgent_Device
 {
     /**
      * Browser signature
@@ -111,8 +110,8 @@ abstract class Zend_Http_UserAgent_AbstractDevice
         } else {
             // Constructing new object
             $this->setUserAgent($userAgent);
-            $this->_server    = $server;
-            $this->_config    = $config;
+            $this->_server = $server;
+            $this->_config = $config;
             $this->_getDefaultFeatures();
             $this->_defineFeatures();
         }
@@ -404,7 +403,7 @@ abstract class Zend_Http_UserAgent_AbstractDevice
         /**
          * @see http://www.texsoft.it/index.php?c=software&m=sw.php.useragent&l=it
          */
-        $pattern =  "(([^/\s]*)(/(\S*))?)(\s*\[[a-zA-Z][a-zA-Z]\])?\s*(\\((([^()]|(\\([^()]*\\)))*)\\))?\s*";
+        $pattern = "(([^/\s]*)(/(\S*))?)(\s*\[[a-zA-Z][a-zA-Z]\])?\s*(\\((([^()]|(\\([^()]*\\)))*)\\))?\s*";
         preg_match("#^$pattern#", $userAgent, $match);
 
         $comment = array();
@@ -430,11 +429,11 @@ abstract class Zend_Http_UserAgent_AbstractDevice
             $result['browser_version'] = trim($match[4]);
         }
         if (count($comment) && !empty($comment[0])) {
-            $result['comment']['full']     = trim($match[7]);
-            $result['comment']['detail']   = $comment;
-            $result['compatibility_flag']  = trim($comment[0]);
+            $result['comment']['full']    = trim($match[7]);
+            $result['comment']['detail']  = $comment;
+            $result['compatibility_flag'] = trim($comment[0]);
             if (isset($comment[1])) {
-                $result['browser_token']   = trim($comment[1]);
+                $result['browser_token'] = trim($comment[1]);
             }
             if (isset($comment[2])) {
                 $result['device_os_token'] = trim($comment[2]);
@@ -445,7 +444,7 @@ abstract class Zend_Http_UserAgent_AbstractDevice
             $result['device_os_token'] = $result['compatibility_flag'];
         }
         if ($match2) {
-            $i = 0;
+            $i   = 0;
             $max = count($match2[0]);
             for ($i = 0; $i < $max; $i ++) {
                 if (!empty($match2[0][$i])) {
@@ -476,7 +475,7 @@ abstract class Zend_Http_UserAgent_AbstractDevice
         // Mozilla : true && false
         $compatibleOrIe = false;
         if (isset($result['compatibility_flag']) && isset($result['comment'])) {
-            $compatibleOrIe = ($result['compatibility_flag'] == 'compatible' || strpos($result['comment']['full'], "MSIE") !== false);
+            $compatibleOrIe = ($result['compatibility_flag'] == 'compatible' || strpos($result['comment']['full'], 'MSIE') !== false);
         }
         if ($product == 'mozilla' && $compatibleOrIe) {
             if (!empty($result['browser_token'])) {
@@ -487,11 +486,10 @@ abstract class Zend_Http_UserAgent_AbstractDevice
                 foreach ($result['comment']['detail'] as $v) {
                     if (strpos($v, 'MSIE') !== false) {
                         $real[0][1]               = trim($v);
-                        $result['browser_engine'] = "MSIE";
-                        $real[1][0]               = "Internet Explorer";
+                        $result['browser_engine'] = 'MSIE';
+                        $real[1][0]               = 'Internet Explorer';
                         $temp                     = explode(' ', trim($v));
                         $real[3][0]               = $temp[1];
-
                     }
                     if (strpos($v, 'Win') !== false) {
                         $result['device_os_token'] = trim($v);
@@ -503,8 +501,8 @@ abstract class Zend_Http_UserAgent_AbstractDevice
                 $result['browser_name']    = $real[1][0];
                 $result['browser_version'] = $real[3][0];
             } else {
-                if(isset($result['browser_token'])) {
-                    $result['browser_name']    = $result['browser_token'];
+                if (isset($result['browser_token'])) {
+                    $result['browser_name'] = $result['browser_token'];
                 }
                 $result['browser_version'] = '??';
             }
@@ -522,7 +520,6 @@ abstract class Zend_Http_UserAgent_AbstractDevice
         }
         if (isset($result['device_os_token'])) {
             if (strpos($result['device_os_token'], 'Win') !== false) {
-
                 $windows = array(
                     'Windows NT 6.1'          => 'Windows 7',
                     'Windows NT 6.0'          => 'Windows Vista',
@@ -555,15 +552,15 @@ abstract class Zend_Http_UserAgent_AbstractDevice
         );
         if (isset($result['compatibility_flag'])) {
             if (in_array($result['compatibility_flag'], $apple_device)) {
-                $result['device']           = strtolower($result['compatibility_flag']);
-                $result['device_os_token']  = 'iPhone OS';
+                $result['device']          = strtolower($result['compatibility_flag']);
+                $result['device_os_token'] = 'iPhone OS';
                 if (isset($comment[3])) {
                     $result['browser_language'] = trim($comment[3]);
                 }
                 if (isset($result['others']['detail'][1])) {
-                    $result['browser_version']  = $result['others']['detail'][1][2];
+                    $result['browser_version'] = $result['others']['detail'][1][2];
                 } elseif (isset($result['others']['detail']) && count($result['others']['detail'])) {
-                    $result['browser_version']  = $result['others']['detail'][0][2];
+                    $result['browser_version'] = $result['others']['detail'][0][2];
                 }
                 if (!empty($result['others']['detail'][2])) {
                     $result['firmware'] = $result['others']['detail'][2][2];
@@ -585,7 +582,7 @@ abstract class Zend_Http_UserAgent_AbstractDevice
                     $result['browser_version'] = $result['others']['detail'][count($result['others']['detail']) - 1][2];
                 }
                 if (isset($comment[3])) {
-                     $result['browser_language'] = trim($comment[3]);
+                    $result['browser_language'] = trim($comment[3]);
                 }
 
                 $last = $result['others']['detail'][count($result['others']['detail']) - 1][1];
@@ -613,8 +610,8 @@ abstract class Zend_Http_UserAgent_AbstractDevice
 
                 // For Safari < 2.2, AppleWebKit version gives the Safari version
                 if (strpos($result['browser_version'], '.') > 2 || (int) $result['browser_version'] > 20) {
-                    $temp = explode('.', $result['browser_version']);
-                    $build = (int) $temp[0];
+                    $temp       = explode('.', $result['browser_version']);
+                    $build      = (int) $temp[0];
                     $awkVersion = array(
                         48  => '0.8',
                         73  => '0.9',
@@ -636,7 +633,7 @@ abstract class Zend_Http_UserAgent_AbstractDevice
             if ($result['others']['detail'][0][1] == 'Gecko') {
                 $searchRV = true;
                 if (!empty($result['others']['detail'][1][1]) && !empty($result['others']['detail'][count($result['others']['detail']) - 1][2]) || strpos(strtolower($result['others']['full']), 'opera') !== false) {
-                    $searchRV = false;
+                    $searchRV                 = false;
                     $result['browser_engine'] = $result['others']['detail'][0][1];
 
                     // the name of the application is at the end indepenently
@@ -651,10 +648,13 @@ abstract class Zend_Http_UserAgent_AbstractDevice
 
                     // exception : if the last one is 'Red Hat' or 'Debian' =>
                     // use rv: to find browser_version */
-                    if (in_array($result['others']['detail'][$last][1], array(
+                    if (in_array(
+                        $result['others']['detail'][$last][1],
+                        array(
                         'Debian',
                         'Hat',
-                    ))) {
+                        )
+                    )) {
                         $searchRV = true;
                     }
                     $result['browser_name']    = $result['others']['detail'][$last][1];
@@ -701,7 +701,7 @@ abstract class Zend_Http_UserAgent_AbstractDevice
 
             // UA ends with 'Opera X.XX' or 'Opera/X.XX'
             if ($result['others']['detail'][0][1] == 'Opera') {
-                $result['browser_name']    = $result['others']['detail'][0][1];
+                $result['browser_name'] = $result['others']['detail'][0][1];
                 // Opera X.XX
                 if (isset($result['others']['detail'][1][1])) {
                     $result['browser_version'] = $result['others']['detail'][1][1];
@@ -712,8 +712,8 @@ abstract class Zend_Http_UserAgent_AbstractDevice
             }
 
             // Opera Mini
-            if (isset($result["browser_token"])) {
-                if (strpos($result["browser_token"], 'Opera Mini') !== false) {
+            if (isset($result['browser_token'])) {
+                if (strpos($result['browser_token'], 'Opera Mini') !== false) {
                     $result['browser_name'] = 'Opera Mini';
                 }
             }
@@ -780,7 +780,7 @@ abstract class Zend_Http_UserAgent_AbstractDevice
                 throw new Zend_Http_UserAgent_Exception('The ' . $this->getType() . ' features adapter must have a "path" config parameter defined');
             }
 
-            if (false === include_once ($path)) {
+            if (false === include_once($path)) {
                 throw new Zend_Http_UserAgent_Exception('The ' . $this->getType() . ' features adapter path that does not exist');
             }
         }

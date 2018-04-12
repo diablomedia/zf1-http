@@ -77,10 +77,12 @@ class Zend_Http_UserAgent_Storage_Session implements Zend_Http_UserAgent_Storage
             $options = (array) $options;
         }
         if (null !== $options && !is_array($options)) {
-            throw new Zend_Http_UserAgent_Storage_Exception(sprintf(
-                'Expected array or object options; "%s" provided',
-                gettype($options)
-            ));
+            throw new Zend_Http_UserAgent_Storage_Exception(
+                sprintf(
+                    'Expected array or object options; "%s" provided',
+                    gettype($options)
+                )
+            );
         }
 
         // add '.' to prevent the message ''Session namespace must not start with a number'
@@ -88,8 +90,8 @@ class Zend_Http_UserAgent_Storage_Session implements Zend_Http_UserAgent_Storage
                           . (isset($options['browser_type'])
                              ? $options['browser_type']
                              : self::NAMESPACE_DEFAULT);
-        $this->_member    = isset($options['member']) ? $options['member'] : self::MEMBER_DEFAULT;
-        $this->_session   = new Zend_Session_Namespace($this->_namespace);
+        $this->_member  = isset($options['member']) ? $options['member'] : self::MEMBER_DEFAULT;
+        $this->_session = new Zend_Session_Namespace($this->_namespace);
     }
 
     /**

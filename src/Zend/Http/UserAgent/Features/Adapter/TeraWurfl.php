@@ -50,7 +50,7 @@ class Zend_Http_UserAgent_Features_Adapter_TeraWurfl implements Zend_Http_UserAg
 
             $config = $config['terawurfl'];
 
-             if (empty($config['terawurfl_lib_dir'])) {
+            if (empty($config['terawurfl_lib_dir'])) {
                 // No lib_dir given
                 throw new Zend_Http_UserAgent_Features_Exception('The "terawurfl_lib_dir" parameter is not defined');
             }
@@ -76,7 +76,6 @@ class Zend_Http_UserAgent_Features_Adapter_TeraWurfl implements Zend_Http_UserAg
      */
     public static function getAllCapabilities(TeraWurfl $wurflObj)
     {
-
         foreach ($wurflObj->capabilities as $group) {
             if (!is_array($group)) {
                 continue;

@@ -63,8 +63,10 @@ class Zend_Http_Client_ClientTest extends PHPUnit\Framework\TestCase
     public function testHeadersContainingCRLFInjectionRaiseAnException($name, $value)
     {
         $this->expectException('Zend_Http_Exception');
-        $this->client->setHeaders(array(
+        $this->client->setHeaders(
+            array(
             $name => $value,
-        ));
+            )
+        );
     }
 }

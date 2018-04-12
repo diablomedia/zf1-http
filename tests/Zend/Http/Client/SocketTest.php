@@ -57,7 +57,7 @@ class Zend_Http_Client_SocketTest extends Zend_Http_Client_CommonHttpTests
     public function setUp()
     {
         if (!(defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') && Zend_Uri_Http::check(TESTS_ZEND_HTTP_CLIENT_BASEURI))) {
-            $this->markTestSkipped("Zend_Http_Client dynamic tests are not enabled in TestConfiguration.php");
+            $this->markTestSkipped('Zend_Http_Client dynamic tests are not enabled in TestConfiguration.php');
             return;
         }
     }
@@ -80,7 +80,7 @@ class Zend_Http_Client_SocketTest extends Zend_Http_Client_CommonHttpTests
         $this->_adapter->setConfig($config);
 
         $hasConfig = $this->_adapter->getConfig();
-        foreach($config as $k => $v) {
+        foreach ($config as $k => $v) {
             $this->assertEquals($v, $hasConfig[$k]);
         }
     }
@@ -92,12 +92,14 @@ class Zend_Http_Client_SocketTest extends Zend_Http_Client_CommonHttpTests
      */
     public function testConfigSetAsZendConfig()
     {
-        $config = new Zend_Config(array(
-            'timeout'  => 400,
-            'nested'   => array(
+        $config = new Zend_Config(
+            array(
+            'timeout' => 400,
+            'nested'  => array(
                 'item' => 'value',
             )
-        ));
+            )
+        );
 
         $this->_adapter->setConfig($config);
 
@@ -148,7 +150,7 @@ class Zend_Http_Client_SocketTest extends Zend_Http_Client_CommonHttpTests
                 'bindto' => '1.2.3.4:0'
             ),
             'ssl' => array(
-                'verify_peer' => true,
+                'verify_peer'       => true,
                 'allow_self_signed' => false
             )
         );
@@ -178,12 +180,14 @@ class Zend_Http_Client_SocketTest extends Zend_Http_Client_CommonHttpTests
         }
 
         $adapter = new $this->config['adapter'];
-        $adapter->setStreamContext(array(
+        $adapter->setStreamContext(
+            array(
             'ssl' => array(
-                'capture_peer_cert' => true,
+                'capture_peer_cert'  => true,
                 'capture_peer_chain' => true
             )
-        ));
+            )
+        );
 
         $this->client->setAdapter($adapter);
         $this->client->setUri($this->baseuri . '/testSimpleRequests.php');
@@ -207,7 +211,7 @@ class Zend_Http_Client_SocketTest extends Zend_Http_Client_CommonHttpTests
 
         try {
             $this->client->request();
-            $this->fail("Expected a timeout Zend_Http_Client_Adapter_Exception");
+            $this->fail('Expected a timeout Zend_Http_Client_Adapter_Exception');
         } catch (Zend_Http_Client_Adapter_Exception $e) {
             $this->assertEquals(Zend_Http_Client_Adapter_Exception::READ_TIMEOUT, $e->getCode());
         }
@@ -244,7 +248,7 @@ class Zend_Http_Client_SocketTest extends Zend_Http_Client_CommonHttpTests
      *
      * @return array
      */
-    static public function invalidContextProvider()
+    public static function invalidContextProvider()
     {
         return array(
             array(new stdClass()),

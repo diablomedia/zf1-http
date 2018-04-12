@@ -112,9 +112,12 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
      * @throws Zend_Http_Client_Adapter_Exception
      */
     public function write(
-        $method, $uri, $http_ver = '1.1', $headers = array(), $body = ''
-    )
-    {
+        $method,
+        $uri,
+        $http_ver = '1.1',
+        $headers = array(),
+        $body = ''
+    ) {
         // If no proxy is set, fall back to default Socket adapter
         if (!$this->config['proxy_host']) {
             return parent::write($method, $uri, $http_ver, $headers, $body);
@@ -144,7 +147,7 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
             $hasProxyAuthHeader = false;
             foreach ($headers as $k => $v) {
                 if ((string) $k == 'proxy-authorization'
-                    || preg_match("/^proxy-authorization:/i", $v)
+                    || preg_match('/^proxy-authorization:/i', $v)
                 ) {
                     $hasProxyAuthHeader = true;
                     break;
@@ -154,7 +157,8 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
                 $headers[] = 'Proxy-authorization: '
                     . Zend_Http_Client::encodeAuthHeader(
                         $this->config['proxy_user'],
-                        $this->config['proxy_pass'], $this->config['proxy_auth']
+                        $this->config['proxy_pass'],
+                        $this->config['proxy_auth']
                     );
             }
         }
@@ -162,7 +166,10 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
         // if we are proxying HTTPS, preform CONNECT handshake with the proxy
         if ($uri->getScheme() == 'https' && (!$this->negotiated)) {
             $this->connectHandshake(
-                $uri->getHost(), $uri->getPort(), $http_ver, $headers
+                $uri->getHost(),
+                $uri->getPort(),
+                $http_ver,
+                $headers
             );
             $this->negotiated = true;
         }
@@ -183,11 +190,13 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
 
         // Add all headers to the request string
         foreach ($headers as $k => $v) {
-            if (is_string($k)) $v = "$k: $v";
+            if (is_string($k)) {
+                $v = "$k: $v";
+            }
             $request .= "$v\r\n";
         }
 
-        if(is_resource($body)) {
+        if (is_resource($body)) {
             $request .= "\r\n";
         } else {
             // Add the request body
@@ -201,8 +210,8 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
             );
         }
 
-        if(is_resource($body)) {
-            if(stream_copy_to_stream($body, $this->socket) == 0) {
+        if (is_resource($body)) {
+            if (stream_copy_to_stream($body, $this->socket) == 0) {
                 throw new Zend_Http_Client_Adapter_Exception(
                     'Error writing request to server'
                 );
@@ -223,15 +232,17 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
      * @throws Zend_Http_Client_Adapter_Exception
      */
     protected function connectHandshake(
-        $host, $port = 443, $http_ver = '1.1', array &$headers = array()
-    )
-    {
+        $host,
+        $port = 443,
+        $http_ver = '1.1',
+        array &$headers = array()
+    ) {
         $request = "CONNECT $host:$port HTTP/$http_ver\r\n" .
-                   "Host: " . $host . "\r\n";
+                   'Host: ' . $host . "\r\n";
 
         // Process provided headers, including important ones to CONNECT request
         foreach ($headers as $k => $v) {
-            switch (strtolower(substr($v,0,strpos($v,':')))) {
+            switch (strtolower(substr($v, 0, strpos($v, ':')))) {
                 case 'proxy-authorization':
                     // break intentionally omitted
 
@@ -256,7 +267,7 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
         }
 
         // Read response headers only
-        $response = '';
+        $response  = '';
         $gotStatus = false;
         while ($line = @fgets($this->socket)) {
             $gotStatus = $gotStatus || (strpos($line, 'HTTP') !== false);
@@ -285,7 +296,7 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
         );
 
         $success = false;
-        foreach($modes as $mode) {
+        foreach ($modes as $mode) {
             $success = stream_socket_enable_crypto($this->socket, true, $mode);
             if ($success) {
                 break;

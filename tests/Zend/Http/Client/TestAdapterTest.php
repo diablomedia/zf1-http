@@ -226,7 +226,7 @@ class Zend_Http_Client_TestAdapterTest extends PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    static public function validHttpResponseProvider()
+    public static function validHttpResponseProvider()
     {
         return array(
            array("HTTP/1.1 200 OK\r\n\r\n"),
@@ -245,7 +245,7 @@ class Zend_Http_Client_TestAdapterTest extends PHPUnit\Framework\TestCase
                  "<p>The requested URL /foo/bar was not found on this server.</p>\n" .
                  "<hr>\n" .
                  "<address>Apache/2.2.3 (CentOS) Server at example.com Port 80</address>\n" .
-                 "</body></html>")
+                 '</body></html>')
         );
     }
 }

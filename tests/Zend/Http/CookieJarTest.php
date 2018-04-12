@@ -92,7 +92,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
      */
     public function testAddCookiesFromResponse()
     {
-        $jar = new Zend_Http_CookieJar();
+        $jar     = new Zend_Http_CookieJar();
         $res_str = $this->loadResponse(
             dirname(realpath(__FILE__)) . '/_files/response_with_cookies'
         );
@@ -119,7 +119,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
         $jar->addCookiesFromResponse($resp, 'http://www.example.com');
     }
 
-    static public function invalidResponseProvider()
+    public static function invalidResponseProvider()
     {
         return array(
             array(new stdClass),
@@ -173,7 +173,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
         }
 
         $expected = 'name=Arthur;quest=holy+grail;swallow=african;';
-        $real = $jar->getAllCookies(Zend_Http_CookieJar::COOKIE_STRING_CONCAT );
+        $real     = $jar->getAllCookies(Zend_Http_CookieJar::COOKIE_STRING_CONCAT);
 
         $this->assertEquals($expected, $real, 'Concatenated string is not as expected');
     }
@@ -197,7 +197,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
         }
 
         $expected = 'name=Arthur; quest=holy+grail; swallow=african';
-        $real = $jar->getAllCookies(Zend_Http_CookieJar::COOKIE_STRING_CONCAT_STRICT);
+        $real     = $jar->getAllCookies(Zend_Http_CookieJar::COOKIE_STRING_CONCAT_STRICT);
 
         $this->assertEquals($expected, $real, 'Concatenated string is not as expected');
     }
@@ -209,7 +209,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
     public function testGetCookieAsObject()
     {
         $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=www.example.com; path=/tests');
-        $jar = new Zend_Http_CookieJar();
+        $jar    = new Zend_Http_CookieJar();
         $jar->addCookie($cookie->__toString(), 'http://www.example.com/tests/');
 
         $cobj = $jar->getCookie('http://www.example.com/tests/', 'foo');
@@ -227,7 +227,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
     public function testGetCookieAsString()
     {
         $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=www.example.com; path=/tests');
-        $jar = new Zend_Http_CookieJar();
+        $jar    = new Zend_Http_CookieJar();
         $jar->addCookie($cookie);
 
         $cstr = $jar->getCookie('http://www.example.com/tests/', 'foo', Zend_Http_CookieJar::COOKIE_STRING_ARRAY);
@@ -243,7 +243,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
     public function testGetCookieReturnFalse()
     {
         $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=www.example.com; path=/tests');
-        $jar = new Zend_Http_CookieJar();
+        $jar    = new Zend_Http_CookieJar();
         $jar->addCookie($cookie);
 
         $cstr = $jar->getCookie('http://www.example.com/tests/', 'otherfoo', Zend_Http_CookieJar::COOKIE_STRING_ARRAY);
@@ -262,7 +262,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
     public function testExceptGetCookieInvalidUri()
     {
         $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=www.example.com; path=/tests');
-        $jar = new Zend_Http_CookieJar();
+        $jar    = new Zend_Http_CookieJar();
         $jar->addCookie($cookie);
 
         $this->expectException(Zend_Exception::class);
@@ -275,7 +275,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
     public function testExceptGetCookieInvalidUri2()
     {
         $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=www.example.com; path=/tests');
-        $jar = new Zend_Http_CookieJar();
+        $jar    = new Zend_Http_CookieJar();
         $jar->addCookie($cookie);
 
         $this->expectException(Zend_Exception::class);
@@ -289,7 +289,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
     public function testExceptGetCookieInvalidReturnType()
     {
         $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=example.com;');
-        $jar = new Zend_Http_CookieJar();
+        $jar    = new Zend_Http_CookieJar();
         $jar->addCookie($cookie);
 
         $this->expectException(Zend_Http_Exception::class);
@@ -303,7 +303,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
      */
     public function testGetMatchingCookies($url, $expected)
     {
-        $jar = new Zend_Http_CookieJar();
+        $jar     = new Zend_Http_CookieJar();
         $cookies = array(
             Zend_Http_Cookie::fromString('foo1=bar1; domain=.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
             Zend_Http_Cookie::fromString('foo2=bar2; domain=foo.com; path=/; expires=' . date(DATE_COOKIE, time() + 3600)),
@@ -316,12 +316,14 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
             Zend_Http_Cookie::fromString('foo8=bar8; domain=subdomain.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
         );
 
-        foreach ($cookies as $cookie) $jar->addCookie($cookie);
+        foreach ($cookies as $cookie) {
+            $jar->addCookie($cookie);
+        }
         $cookies = $jar->getMatchingCookies($url);
         $this->assertEquals($expected, count($cookies), $jar->getMatchingCookies($url, true, Zend_Http_CookieJar::COOKIE_STRING_CONCAT));
     }
 
-    static public function cookieMatchTestProvider()
+    public static function cookieMatchTestProvider()
     {
         return array(
             array('http://www.foo.com/path/file.txt', 4),
@@ -338,7 +340,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
      */
     public function testGetMatchingCookiesNoSession()
     {
-        $jar = new Zend_Http_CookieJar();
+        $jar     = new Zend_Http_CookieJar();
         $cookies = array(
             Zend_Http_Cookie::fromString('foo1=bar1; domain=.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
             Zend_Http_Cookie::fromString('foo2=bar2; domain=.foo.com; path=/; expires=' . date(DATE_COOKIE, time() + 3600)),
@@ -350,7 +352,9 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
             Zend_Http_Cookie::fromString('foo8=bar8; domain=subdomain.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
         );
 
-        foreach ($cookies as $cookie) $jar->addCookie($cookie);
+        foreach ($cookies as $cookie) {
+            $jar->addCookie($cookie);
+        }
 
         $this->assertEquals(8, count($jar->getAllCookies()), 'Cookie count is expected to be 8');
 
@@ -366,7 +370,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
      */
     public function testGetMatchingCookiesWithTime()
     {
-        $jar = new Zend_Http_CookieJar();
+        $jar     = new Zend_Http_CookieJar();
         $cookies = array(
             Zend_Http_Cookie::fromString('foo1=bar1; domain=.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
             Zend_Http_Cookie::fromString('foo2=bar2; domain=.foo.com; path=/; expires=' . date(DATE_COOKIE, time() + 7200)),
@@ -378,7 +382,9 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
             Zend_Http_Cookie::fromString('foo8=bar8; domain=subdomain.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
         );
 
-        foreach ($cookies as $cookie) $jar->addCookie($cookie);
+        foreach ($cookies as $cookie) {
+            $jar->addCookie($cookie);
+        }
 
         $this->assertEquals(8, count($jar->getAllCookies()), 'Cookie count is expected to be 8');
 
@@ -394,7 +400,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
      */
     public function testGetMatchingCookiesAsStrings()
     {
-        $jar = new Zend_Http_CookieJar();
+        $jar     = new Zend_Http_CookieJar();
         $cookies = array(
             Zend_Http_Cookie::fromString('foo1=bar1; domain=.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
             Zend_Http_Cookie::fromString('foo2=bar2; domain=.foo.com; path=/; expires=' . date(DATE_COOKIE, time() + 3600)),
@@ -406,13 +412,16 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
             Zend_Http_Cookie::fromString('foo8=bar8; domain=subdomain.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
         );
 
-        foreach ($cookies as $cookie) $jar->addCookie($cookie);
+        foreach ($cookies as $cookie) {
+            $jar->addCookie($cookie);
+        }
 
         $this->assertEquals(8, count($jar->getAllCookies()), 'Cookie count is expected to be 8');
 
         $cookies = $jar->getMatchingCookies('http://www.foo.com/path/file.txt', true, Zend_Http_CookieJar::COOKIE_STRING_ARRAY);
         $this->assertInternalType('array', $cookies, '$cookies is expected to be an array, but it is not');
-        $this->assertInternalType('string', $cookies[0], '$cookies[0] is expected to be a string');;
+        $this->assertInternalType('string', $cookies[0], '$cookies[0] is expected to be a string');
+        ;
 
         $cookies = $jar->getMatchingCookies('http://www.foo.com/path/file.txt', true, Zend_Http_CookieJar::COOKIE_STRING_CONCAT);
         $this->assertInternalType('string', $cookies, '$cookies is expected to be a string');
@@ -484,13 +493,15 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
      */
     public function testMatchPathWithTrailingSlash()
     {
-        $jar = new Zend_Http_CookieJar();
+        $jar     = new Zend_Http_CookieJar();
         $cookies = array(
             Zend_Http_Cookie::fromString('foo1=bar1; domain=.example.com; path=/a/b'),
             Zend_Http_Cookie::fromString('foo2=bar2; domain=.example.com; path=/a/b/')
         );
 
-        foreach ($cookies as $cookie) $jar->addCookie($cookie);
+        foreach ($cookies as $cookie) {
+            $jar->addCookie($cookie);
+        }
         $cookies = $jar->getMatchingCookies('http://www.example.com/a/b/file.txt');
 
         $this->assertInternalType('array', $cookies);
@@ -499,12 +510,14 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
 
     public function testIteratorAndCountable()
     {
-        $jar = new Zend_Http_CookieJar();
+        $jar     = new Zend_Http_CookieJar();
         $cookies = array(
             Zend_Http_Cookie::fromString('foo1=bar1; domain=.example.com; path=/a/b'),
             Zend_Http_Cookie::fromString('foo2=bar2; domain=.example.com; path=/a/b/')
         );
-        foreach ($cookies as $cookie) $jar->addCookie($cookie);
+        foreach ($cookies as $cookie) {
+            $jar->addCookie($cookie);
+        }
         foreach ($jar as $cookie) {
             $this->assertTrue($cookie instanceof Zend_Http_Cookie);
         }

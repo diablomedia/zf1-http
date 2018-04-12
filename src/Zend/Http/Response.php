@@ -159,7 +159,7 @@ class Zend_Http_Response
 
         foreach ($headers as $name => $value) {
             if (is_int($name)) {
-                $header = explode(":", $value, 2);
+                $header = explode(':', $value, 2);
                 if (count($header) != 2) {
                     throw new Zend_Http_Exception("'{$value}' is not a valid HTTP header");
                 }
@@ -349,7 +349,9 @@ class Zend_Http_Response
     public function getHeader($header)
     {
         $header = ucwords(strtolower($header));
-        if (! is_string($header) || ! isset($this->headers[$header])) return null;
+        if (! is_string($header) || ! isset($this->headers[$header])) {
+            return null;
+        }
 
         return $this->headers[$header];
     }
@@ -370,12 +372,10 @@ class Zend_Http_Response
         }
 
         // Iterate over the headers and stringify them
-        foreach ($this->headers as $name => $value)
-        {
-            if (is_string($value))
+        foreach ($this->headers as $name => $value) {
+            if (is_string($value)) {
                 $str .= "{$name}: {$value}{$br}";
-
-            elseif (is_array($value)) {
+            } elseif (is_array($value)) {
                 foreach ($value as $subval) {
                     $str .= "{$name}: {$subval}{$br}";
                 }
@@ -421,7 +421,9 @@ class Zend_Http_Response
     public static function responseCodeAsText($code = null, $http11 = true)
     {
         $messages = self::$messages;
-        if (! $http11) $messages[302] = 'Moved Temporarily';
+        if (! $http11) {
+            $messages[302] = 'Moved Temporarily';
+        }
 
         if ($code === null) {
             return $messages;
@@ -505,13 +507,13 @@ class Zend_Http_Response
         unset($parts);
         $last_header = null;
 
-        foreach($lines as $index => $line) {
+        foreach ($lines as $index => $line) {
             if ($index === 0 && preg_match('#^HTTP/\d+(?:\.\d+) [1-5]\d+#', $line)) {
                 // Status line; ignore
                 continue;
             }
 
-            if ($line == "") {
+            if ($line == '') {
                 // Done processing headers
                 break;
             }
@@ -529,12 +531,12 @@ class Zend_Http_Response
                     }
 
                     $headers[$h_name][] = ltrim($h_value);
-                    $last_header = $h_name;
+                    $last_header        = $h_name;
                     continue;
                 }
 
                 $headers[$h_name] = ltrim($h_value);
-                $last_header = $h_name;
+                $last_header      = $h_name;
                 continue;
             }
 
@@ -595,7 +597,6 @@ class Zend_Http_Response
         // override it's internal encoding
         if (function_exists('mb_internal_encoding') &&
            ((int) ini_get('mbstring.func_overload')) & 2) {
-
             $mbIntEnc = mb_internal_encoding();
             mb_internal_encoding('ASCII');
         }
@@ -606,7 +607,7 @@ class Zend_Http_Response
             }
 
             $length = hexdec(trim($m[1]));
-            $cut = strlen($m[0]);
+            $cut    = strlen($m[0]);
             $decBody .= substr($body, $cut, $length);
             $body = substr($body, $cut + $length + 2);
         }

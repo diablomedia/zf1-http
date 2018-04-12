@@ -30,8 +30,7 @@
  * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Http_UserAgent_Features_Adapter_Browscap
-    implements Zend_Http_UserAgent_Features_Adapter
+class Zend_Http_UserAgent_Features_Adapter_Browscap implements Zend_Http_UserAgent_Features_Adapter
 {
     /**
      * Constructor
@@ -44,10 +43,12 @@ class Zend_Http_UserAgent_Features_Adapter_Browscap
     {
         $browscap = ini_get('browscap');
         if (empty($browscap) || !file_exists($browscap)) {
-            throw new Zend_Http_UserAgent_Features_Exception(sprintf(
-                '%s requires a browscap entry in php.ini pointing to a valid browscap.ini; none present',
-                __CLASS__
-            ));
+            throw new Zend_Http_UserAgent_Features_Exception(
+                sprintf(
+                    '%s requires a browscap entry in php.ini pointing to a valid browscap.ini; none present',
+                    __CLASS__
+                )
+            );
         }
     }
 

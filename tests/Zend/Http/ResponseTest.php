@@ -35,9 +35,10 @@
 class Zend_Http_ResponseTest extends PHPUnit\Framework\TestCase
 {
     public function setUp()
-    { }
+    {
+    }
 
-    public function testGzipResponse ()
+    public function testGzipResponse()
     {
         $response_text = file_get_contents(dirname(__FILE__) . '/_files/response_gzip');
 
@@ -48,7 +49,7 @@ class Zend_Http_ResponseTest extends PHPUnit\Framework\TestCase
         $this->assertEquals('f24dd075ba2ebfb3bf21270e3fdc5303', md5($res->getRawBody()));
     }
 
-    public function testDeflateResponse ()
+    public function testDeflateResponse()
     {
         $response_text = file_get_contents(dirname(__FILE__) . '/_files/response_deflate');
 
@@ -79,8 +80,8 @@ class Zend_Http_ResponseTest extends PHPUnit\Framework\TestCase
         // not preceded by \r with the sequence \r\n within the headers,
         // ensuring that the message is well-formed.
         list($headers, $message) = explode("\n\n", $response_text, 2);
-        $headers = preg_replace("#(?<!\r)\n#", "\r\n", $headers);
-        $response_text = $headers . "\r\n\r\n" . $message;
+        $headers                 = preg_replace("#(?<!\r)\n#", "\r\n", $headers);
+        $response_text           = $headers . "\r\n\r\n" . $message;
 
         $res = Zend_Http_Response::fromString($response_text);
 
@@ -89,7 +90,7 @@ class Zend_Http_ResponseTest extends PHPUnit\Framework\TestCase
         $this->assertEquals('c830dd74bb502443cf12514c185ff174', md5($res->getRawBody()));
     }
 
-    public function testChunkedResponse ()
+    public function testChunkedResponse()
     {
         $response_text = file_get_contents(dirname(__FILE__) . '/_files/response_chunked');
 
@@ -114,19 +115,19 @@ class Zend_Http_ResponseTest extends PHPUnit\Framework\TestCase
     public function testExtractMessageCrlf()
     {
         $response_text = file_get_contents(dirname(__FILE__) . '/_files/response_crlf');
-        $this->assertEquals("OK", Zend_Http_Response::extractMessage($response_text), "Response message is not 'OK' as expected");
+        $this->assertEquals('OK', Zend_Http_Response::extractMessage($response_text), "Response message is not 'OK' as expected");
     }
 
     public function testExtractMessageLfonly()
     {
         $response_text = file_get_contents(dirname(__FILE__) . '/_files/response_lfonly');
-        $this->assertEquals("OK", Zend_Http_Response::extractMessage($response_text), "Response message is not 'OK' as expected");
+        $this->assertEquals('OK', Zend_Http_Response::extractMessage($response_text), "Response message is not 'OK' as expected");
     }
 
     public function test404IsError()
     {
         $response_text = $this->readResponse('response_404');
-        $response = Zend_Http_Response::fromString($response_text);
+        $response      = Zend_Http_Response::fromString($response_text);
 
         $this->assertEquals(404, $response->getStatus(), 'Response code is expected to be 404, but it\'s not.');
         $this->assertTrue($response->isError(), 'Response is an error, but isError() returned false');
@@ -137,7 +138,7 @@ class Zend_Http_ResponseTest extends PHPUnit\Framework\TestCase
     public function test500isError()
     {
         $response_text = $this->readResponse('response_500');
-        $response = Zend_Http_Response::fromString($response_text);
+        $response      = Zend_Http_Response::fromString($response_text);
 
         $this->assertEquals(500, $response->getStatus(), 'Response code is expected to be 500, but it\'s not.');
         $this->assertTrue($response->isError(), 'Response is an error, but isError() returned false');
@@ -200,7 +201,7 @@ class Zend_Http_ResponseTest extends PHPUnit\Framework\TestCase
     public function testAsString()
     {
         $response_str = $this->readResponse('response_404');
-        $response = Zend_Http_Response::fromString($response_str);
+        $response     = Zend_Http_Response::fromString($response_str);
 
         $this->assertEquals(strtolower($response_str), strtolower($response->asString()), 'Response conversion to string does not match original string');
         $this->assertEquals(strtolower($response_str), strtolower((string) $response), 'Response conversion to string does not match original string');
@@ -209,7 +210,7 @@ class Zend_Http_ResponseTest extends PHPUnit\Framework\TestCase
     public function testGetHeaders()
     {
         $response = Zend_Http_Response::fromString($this->readResponse('response_deflate'));
-        $headers = $response->getHeaders();
+        $headers  = $response->getHeaders();
 
         $this->assertEquals(8, count($headers), 'Header count is not as expected');
         $this->assertEquals('Apache', $headers['Server'], 'Server header is not as expected');
@@ -249,7 +250,7 @@ class Zend_Http_ResponseTest extends PHPUnit\Framework\TestCase
     public function testUnknownCode()
     {
         $response_str = $this->readResponse('response_unknown');
-        $response = Zend_Http_Response::fromString($response_str);
+        $response     = Zend_Http_Response::fromString($response_str);
 
         // Check that dynamically the message is parsed
         $this->assertEquals(550, $response->getStatus(), 'Status is expected to be a non-standard 550');
@@ -323,10 +324,13 @@ class Zend_Http_ResponseTest extends PHPUnit\Framework\TestCase
      */
     public function testConstructorWithHeadersAssocArray()
     {
-        $response = new Zend_Http_Response(200, array(
+        $response = new Zend_Http_Response(
+            200,
+            array(
             'content-type' => 'text/plain',
             'x-foo'        => 'bar:baz'
-        ));
+            )
+        );
 
         $this->assertEquals('text/plain', $response->getHeader('content-type'));
         $this->assertEquals('bar:baz', $response->getHeader('x-foo'));
@@ -340,10 +344,13 @@ class Zend_Http_ResponseTest extends PHPUnit\Framework\TestCase
      */
     public function testConstructorWithHeadersIndexedArrayZF10277()
     {
-        $response = new Zend_Http_Response(200, array(
+        $response = new Zend_Http_Response(
+            200,
+            array(
             'content-type: text/plain',
             'x-foo: bar:baz'
-        ));
+            )
+        );
 
         $this->assertEquals('text/plain', $response->getHeader('content-type'));
         $this->assertEquals('bar:baz', $response->getHeader('x-foo'));
@@ -358,10 +365,13 @@ class Zend_Http_ResponseTest extends PHPUnit\Framework\TestCase
      */
     public function testConstructorWithHeadersIndexedArrayNoWhitespace()
     {
-        $response = new Zend_Http_Response(200, array(
+        $response = new Zend_Http_Response(
+            200,
+            array(
             'content-type:text/plain',
             'x-foo:bar:baz'
-        ));
+            )
+        );
 
         $this->assertEquals('text/plain', $response->getHeader('content-type'));
         $this->assertEquals('bar:baz', $response->getHeader('x-foo'));

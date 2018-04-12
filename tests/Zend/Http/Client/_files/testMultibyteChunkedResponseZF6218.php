@@ -20,7 +20,7 @@
  * @version    $Id$
  */
 
-header("Content-type: text/plain; charset=UTF-8");
+header('Content-type: text/plain; charset=UTF-8');
 @ob_end_flush();
 @ob_implicit_flush(true);
 

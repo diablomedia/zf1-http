@@ -70,7 +70,8 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
      *
      */
     public function __construct()
-    { }
+    {
+    }
 
     /**
      * Set the nextRequestWillFail flag
@@ -94,7 +95,6 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
     {
         if ($config instanceof Zend_Config) {
             $config = $config->toArray();
-
         } elseif (! is_array($config)) {
             throw new Zend_Http_Client_Adapter_Exception(
                 'Array or Zend_Config object expected, got ' . gettype($config)
@@ -136,14 +136,18 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
     public function write($method, $uri, $http_ver = '1.1', $headers = array(), $body = '')
     {
         $host = $uri->getHost();
-            $host = (strtolower($uri->getScheme()) == 'https' ? 'sslv2://' . $host : $host);
+        $host = (strtolower($uri->getScheme()) == 'https' ? 'sslv2://' . $host : $host);
 
         // Build request headers
         $path = $uri->getPath();
-        if ($uri->getQuery()) $path .= '?' . $uri->getQuery();
+        if ($uri->getQuery()) {
+            $path .= '?' . $uri->getQuery();
+        }
         $request = "{$method} {$path} HTTP/{$http_ver}\r\n";
         foreach ($headers as $k => $v) {
-            if (is_string($k)) $v = ucfirst($k) . ": $v";
+            if (is_string($k)) {
+                $v = ucfirst($k) . ": $v";
+            }
             $request .= "$v\r\n";
         }
 
@@ -173,7 +177,8 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
      *
      */
     public function close()
-    { }
+    {
+    }
 
     /**
      * Set the HTTP response(s) to be returned by this adapter
@@ -186,7 +191,7 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
             $response = $response->asString("\r\n");
         }
 
-        $this->responses = (array)$response;
+        $this->responses     = (array)$response;
         $this->responseIndex = 0;
     }
 
@@ -197,7 +202,7 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
      */
     public function addResponse($response)
     {
-         if ($response instanceof Zend_Http_Response) {
+        if ($response instanceof Zend_Http_Response) {
             $response = $response->asString("\r\n");
         }
 
@@ -214,7 +219,8 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
     {
         if ($index < 0 || $index >= count($this->responses)) {
             throw new Zend_Http_Client_Adapter_Exception(
-                'Index out of range of response buffer size');
+                'Index out of range of response buffer size'
+            );
         }
         $this->responseIndex = $index;
     }

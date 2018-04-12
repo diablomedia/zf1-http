@@ -100,7 +100,7 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
     public function testGetRawValueFromString($val)
     {
         // Because ';' has special meaning in the cookie, strip it out for this test.
-        $val = str_replace(';', '', $val);
+        $val    = str_replace(';', '', $val);
         $cookie = Zend_Http_Cookie::fromString('cookie=' . $val . '; domain=example.com', null, false);
         $this->assertEquals($val, $cookie->getValue());
     }
@@ -114,7 +114,7 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
     public function testGetRawValueFromStringToString($val)
     {
         // Because ';' has special meaning in the cookie, strip it out for this test.
-        $val = str_replace(';', '', $val);
+        $val    = str_replace(';', '', $val);
         $cookie = Zend_Http_Cookie::fromString('cookie=' . $val . '; domain=example.com', null, false);
         $this->assertEquals('cookie=' . $val . ';', (string)$cookie);
     }
@@ -128,7 +128,7 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
     public function testGetValueFromStringEncodedToString($val)
     {
         // Because ';' has special meaning in the cookie, strip it out for this test.
-        $val = str_replace(';', '', $val);
+        $val    = str_replace(';', '', $val);
         $cookie = Zend_Http_Cookie::fromString('cookie=' . $val . '; domain=example.com', null, true);
         $this->assertEquals('cookie=' . urlencode($val) . ';', (string)$cookie);
     }
@@ -191,7 +191,9 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
     public function testGetPathInRefUrl(Zend_Uri $uri)
     {
         $path = $uri->getPath();
-        if (substr($path, -1, 1) == '/') $path .= 'x';
+        if (substr($path, -1, 1) == '/') {
+            $path .= 'x';
+        }
         $path = dirname($path);
         if ($path == DIRECTORY_SEPARATOR) {
             $path = '/';
@@ -261,8 +263,8 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
     public function testIsExpiredDifferentTime()
     {
         $notexpired = time() + 3600;
-        $expired = time() - 3600;
-        $now = time() + 7200;
+        $expired    = time() - 3600;
+        $now        = time() + 7200;
 
         $cookies = array(
             'cookie=foo; domain=example.com; expires=' . date(DATE_COOKIE, $notexpired),
@@ -272,7 +274,9 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
         // Make sure all cookies are expired
         foreach ($cookies as $cstr) {
             $cookie = Zend_Http_Cookie::fromString($cstr);
-            if (! $cookie) $this->fail('Got no cookie object from a valid cookie string');
+            if (! $cookie) {
+                $this->fail('Got no cookie object from a valid cookie string');
+            }
             $this->assertTrue($cookie->isExpired($now), 'Cookie is expected to be expired');
         }
 
@@ -280,7 +284,9 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
         $now = time() - 7200;
         foreach ($cookies as $cstr) {
             $cookie = Zend_Http_Cookie::fromString($cstr);
-            if (! $cookie) $this->fail('Got no cookie object from a valid cookie string');
+            if (! $cookie) {
+                $this->fail('Got no cookie object from a valid cookie string');
+            }
             $this->assertFalse($cookie->isExpired($now), 'Cookie is expected not to be expired');
         }
     }
@@ -329,7 +335,9 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
 
         foreach ($cookies as $cstr) {
             $cookie = Zend_Http_Cookie::fromString($cstr);
-            if (! $cookie) $this->fail('Got no cookie object from a valid cookie string');
+            if (! $cookie) {
+                $this->fail('Got no cookie object from a valid cookie string');
+            }
             $this->assertEquals('value', $cookie->getValue(), 'Value is not as expected');
             $this->assertEquals('foo.com', $cookie->getDomain(), 'Domain is not as expected');
             $this->assertTrue($cookie->isSecure(), 'Cookie is expected to be secure');
@@ -347,7 +355,7 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
         $this->assertEquals($match, $cookie->match($uri));
     }
 
-    static public function domainMatchTestProvider()
+    public static function domainMatchTestProvider()
     {
         $uri = Zend_Uri::factory('http://www.foo.com/some/file.txt');
 
@@ -442,8 +450,8 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
      */
     public function testZF5690OverflowingExpiryDate()
     {
-        $expTime = "Sat, 29-Jan-2039 00:54:42 GMT";
-        $cookie = Zend_Http_Cookie::fromString("foo=bar; domain=.example.com; expires=$expTime");
+        $expTime = 'Sat, 29-Jan-2039 00:54:42 GMT';
+        $cookie  = Zend_Http_Cookie::fromString("foo=bar; domain=.example.com; expires=$expTime");
         $this->assertFalse($cookie->isExpired(), 'Expiry: ' . $cookie->getExpiryTime());
     }
 
@@ -464,12 +472,12 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    static public function invalidCookieNameCharProvider()
+    public static function invalidCookieNameCharProvider()
     {
         return array(
-            array("="),
-            array(","),
-            array(";"),
+            array('='),
+            array(','),
+            array(';'),
             array("\t"),
             array("\r"),
             array("\n"),
@@ -483,14 +491,14 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    static public function validCookieValueProvider()
+    public static function validCookieValueProvider()
     {
         return array(
             array('simpleCookie'),
             array('space cookie'),
             array('!@#$%^*&()* ][{}?;'),
             array("line\n\rbreaks"),
-            array("0000j8CydACPu_-J9bE8uTX91YU:12a83ks4k"), // value from: Alexander Cheshchevik's comment on issue: ZF-1850
+            array('0000j8CydACPu_-J9bE8uTX91YU:12a83ks4k'), // value from: Alexander Cheshchevik's comment on issue: ZF-1850
 
             // Long cookie value - 2kb
             array(str_repeat(md5(time()), 64))
@@ -502,7 +510,7 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    static public function refUrlProvider()
+    public static function refUrlProvider()
     {
         return array(
             array(Zend_Uri::factory('http://example.com/')),
@@ -518,9 +526,9 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    static public function validCookieWithInfoProvider()
+    public static function validCookieWithInfoProvider()
     {
-        $now = time();
+        $now       = time();
         $yesterday = $now - (3600 * 24);
 
         return array(
@@ -596,7 +604,7 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
     public static function cookieWithExpiredFlagProvider()
     {
         return array(
-            array('cookie=foo;domain=example.com;expires=' . date(DATE_COOKIE, time() +  12 * 3600), false),
+            array('cookie=foo;domain=example.com;expires=' . date(DATE_COOKIE, time() + 12 * 3600), false),
             array('cookie=foo;domain=example.com;expires=' . date(DATE_COOKIE, time() - 15), true),
             array('cookie=foo;domain=example.com;', false),
             array('cookie=foo;domain=example.com;expires=Fri, 01-Mar-2109 00:19:21 GMT', false),
@@ -604,4 +612,3 @@ class Zend_Http_CookieTest extends PHPUnit\Framework\TestCase
         );
     }
 }
-

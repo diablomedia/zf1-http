@@ -31,7 +31,6 @@
  */
 class Zend_Http_UserAgent_Mobile extends Zend_Http_UserAgent_AbstractDevice
 {
-
     const DEFAULT_FEATURES_ADAPTER_CLASSNAME = 'Zend_Http_UserAgent_Features_Adapter_Browscap';
 
     const DEFAULT_FEATURES_ADAPTER_PATH = 'Zend/Http/UserAgent/Features/Adapter/Browscap.php';
@@ -313,7 +312,6 @@ class Zend_Http_UserAgent_Mobile extends Zend_Http_UserAgent_AbstractDevice
      */
     public static function userAgentStart($userAgent)
     {
-
         $mobile_ua = strtolower(substr($userAgent, 0, 4));
 
         return (in_array($mobile_ua, self::$_uaBegin));
@@ -355,13 +353,13 @@ class Zend_Http_UserAgent_Mobile extends Zend_Http_UserAgent_AbstractDevice
 
         parent::_defineFeatures();
 
-        if (isset($this->_aFeatures["mobile_browser"])) {
-            $this->setFeature("browser_name", $this->_aFeatures["mobile_browser"]);
-            $this->_browser = $this->_aFeatures["mobile_browser"];
+        if (isset($this->_aFeatures['mobile_browser'])) {
+            $this->setFeature('browser_name', $this->_aFeatures['mobile_browser']);
+            $this->_browser = $this->_aFeatures['mobile_browser'];
         }
-        if (isset($this->_aFeatures["mobile_browser_version"])) {
-            $this->setFeature("browser_version", $this->_aFeatures["mobile_browser_version"]);
-            $this->_browserVersion = $this->_aFeatures["mobile_browser_version"];
+        if (isset($this->_aFeatures['mobile_browser_version'])) {
+            $this->setFeature('browser_version', $this->_aFeatures['mobile_browser_version']);
+            $this->_browserVersion = $this->_aFeatures['mobile_browser_version'];
         }
 
         // markup
@@ -406,6 +404,7 @@ class Zend_Http_UserAgent_Mobile extends Zend_Http_UserAgent_AbstractDevice
             case 'wml_1_2':
             case 'wml_1_3':
                 $return = 'wml'; //text/vnd.wap.wml encoding="ISO-8859-15"
+                // no break
             case 'html_wi_imode_compact_generic':
             case 'html_wi_imode_html_1':
             case 'html_wi_imode_html_2':
@@ -413,9 +412,11 @@ class Zend_Http_UserAgent_Mobile extends Zend_Http_UserAgent_AbstractDevice
             case 'html_wi_imode_html_4':
             case 'html_wi_imode_html_5':
                 $return = 'chtml'; //text/html
+                // no break
             case 'html_wi_oma_xhtmlmp_1_0': //application/vnd.wap.xhtml+xml
             case 'html_wi_w3_xhtmlbasic': //application/xhtml+xml DTD XHTML Basic 1.0
                 $return = 'xhtml';
+                // no break
             case 'html_web_3_2': //text/html DTD Html 3.2 Final
             case 'html_web_4_0': //text/html DTD Html 4.01 Transitional
                 $return = '';
@@ -480,7 +481,7 @@ class Zend_Http_UserAgent_Mobile extends Zend_Http_UserAgent_AbstractDevice
      */
     public function getPreferredMarkup()
     {
-        return $this->getFeature("markup");
+        return $this->getFeature('markup');
     }
 
     /**

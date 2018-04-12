@@ -38,17 +38,17 @@ class Zend_Http_Header_HeaderValueTest extends PHPUnit\Framework\TestCase
     public function getFilterValues()
     {
         return array(
-            array("This is a\n test", "This is a test"),
-            array("This is a\r test", "This is a test"),
-            array("This is a\n\r test", "This is a test"),
-            array("This is a\r\n  test", "This is a  test"),
-            array("This is a \r\ntest", "This is a test"),
-            array("This is a \r\n\n test", "This is a  test"),
-            array("This is a\n\n test", "This is a test"),
-            array("This is a\r\r test", "This is a test"),
-            array("This is a \r\r\n test", "This is a  test"),
-            array("This is a \r\n\r\ntest", "This is a test"),
-            array("This is a \r\n\n\r\n test", "This is a  test")
+            array("This is a\n test", 'This is a test'),
+            array("This is a\r test", 'This is a test'),
+            array("This is a\n\r test", 'This is a test'),
+            array("This is a\r\n  test", 'This is a  test'),
+            array("This is a \r\ntest", 'This is a test'),
+            array("This is a \r\n\n test", 'This is a  test'),
+            array("This is a\n\n test", 'This is a test'),
+            array("This is a\r\r test", 'This is a test'),
+            array("This is a \r\r\n test", 'This is a  test'),
+            array("This is a \r\n\r\ntest", 'This is a test'),
+            array("This is a \r\n\n\r\n test", 'This is a  test')
         );
     }
 
