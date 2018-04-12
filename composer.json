@@ -33,7 +33,7 @@
         "phpunit/phpunit": "^6.0",
         "phpstan/phpstan": "^0.9.2",
         "friendsofphp/php-cs-fixer": "^2.11",
-        "maglnet/composer-require-checker": "^0.2.1",
+        "maglnet/composer-require-checker": "^0.1.6 | ^0.2.1",
         "phpro/grumphp": "^0.14.0"
     },
     "include-path": [
