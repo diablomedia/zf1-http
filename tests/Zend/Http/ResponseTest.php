@@ -212,7 +212,7 @@ class Zend_Http_ResponseTest extends PHPUnit\Framework\TestCase
         $response = Zend_Http_Response::fromString($this->readResponse('response_deflate'));
         $headers  = $response->getHeaders();
 
-        $this->assertEquals(8, count($headers), 'Header count is not as expected');
+        $this->assertCount(8, $headers, 'Header count is not as expected');
         $this->assertEquals('Apache', $headers['Server'], 'Server header is not as expected');
         $this->assertEquals('deflate', $headers['Content-encoding'], 'Content-type header is not as expected');
     }
@@ -265,7 +265,7 @@ class Zend_Http_ResponseTest extends PHPUnit\Framework\TestCase
         $response = Zend_Http_Response::fromString($this->readResponse('response_multiline_header'));
 
         // Make sure we got the corrent no. of headers
-        $this->assertEquals(6, count($response->getHeaders()), 'Header count is expected to be 6');
+        $this->assertCount(6, $response->getHeaders(), 'Header count is expected to be 6');
 
         // Check header integrity
         $this->assertEquals('timeout=15, max=100', $response->getHeader('keep-alive'));
