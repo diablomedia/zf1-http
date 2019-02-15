@@ -252,13 +252,13 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
      *
      * @param  string        $method
      * @param  Zend_Uri_Http $uri
-     * @param  float         $httpVersion
+     * @param  string        $httpVersion
      * @param  array         $headers
      * @param  string|resource        $body
      * @return string        $request
      * @throws Zend_Http_Client_Adapter_Exception If connection fails, connected to wrong host, no PUT file defined, unsupported method, or unsupported cURL option
      */
-    public function write($method, $uri, $httpVersion = 1.1, $headers = array(), $body = '')
+    public function write($method, $uri, $httpVersion = '1.1', $headers = array(), $body = '')
     {
         // Make sure we're properly connected
         if (!$this->_curl) {
@@ -351,7 +351,7 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
         }
 
         // get http version to use
-        $curlHttp = ($httpVersion == 1.1) ? CURL_HTTP_VERSION_1_1 : CURL_HTTP_VERSION_1_0;
+        $curlHttp = ($httpVersion == '1.1') ? CURL_HTTP_VERSION_1_1 : CURL_HTTP_VERSION_1_0;
 
         // mark as HTTP request and set HTTP method
         curl_setopt($this->_curl, CURLOPT_HTTP_VERSION, $curlHttp);

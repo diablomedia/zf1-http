@@ -791,7 +791,7 @@ abstract class Zend_Http_UserAgent_AbstractDevice implements Zend_Http_UserAgent
     /**
      * Retrieve image format support
      *
-     * @return array
+     * @return array|null
      */
     public function getImageFormatSupport()
     {
@@ -800,8 +800,6 @@ abstract class Zend_Http_UserAgent_AbstractDevice implements Zend_Http_UserAgent
 
     /**
      * Get maximum image height supported by this device
-     *
-     * @return null
      */
     public function getMaxImageHeight()
     {
@@ -810,8 +808,6 @@ abstract class Zend_Http_UserAgent_AbstractDevice implements Zend_Http_UserAgent
 
     /**
      * Get maximum image width supported by this device
-     *
-     * @return null
      */
     public function getMaxImageWidth()
     {
@@ -820,8 +816,6 @@ abstract class Zend_Http_UserAgent_AbstractDevice implements Zend_Http_UserAgent
 
     /**
      * Get physical screen height of this device
-     *
-     * @return null
      */
     public function getPhysicalScreenHeight()
     {
@@ -830,8 +824,6 @@ abstract class Zend_Http_UserAgent_AbstractDevice implements Zend_Http_UserAgent
 
     /**
      * Get physical screen width of this device
-     *
-     * @return null
      */
     public function getPhysicalScreenWidth()
     {

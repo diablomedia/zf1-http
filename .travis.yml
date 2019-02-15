@@ -36,17 +36,22 @@ script:
 jobs:
   fast_finish: true
   allow_failures:
+    - php: 7.4snapshot
     - php: nightly
   include:
-    - php: 7
-      env: COMPOSER_ARGS="--prefer-lowest"
-    - php: 7
     - php: 7.1
       env: COMPOSER_ARGS="--prefer-lowest"
     - php: 7.1
     - php: 7.2
       env: COMPOSER_ARGS="--prefer-lowest"
     - php: 7.2
+    - php: 7.3
+      env: COMPOSER_ARGS="--prefer-lowest"
+    - php: 7.3
+    - php: 7.4snapshot
+      env: COMPOSER_ARGS="--ignore-platform-reqs --prefer-lowest"
+    - php: 7.4snapshot
+      env: COMPOSER_ARGS="--ignore-platform-reqs"
     - php: nightly
       env: COMPOSER_ARGS="--ignore-platform-reqs --prefer-lowest"
     - php: nightly
@@ -63,7 +68,7 @@ jobs:
         - composer phpstan
 
     - stage: test with coverage
-      php: 7.1
+      php: 7.2
       env: USE_XDEBUG=true CC_TEST_REPORTER_ID=732fedac61ae95e4f5dce247d0f5c4b20c50ca6b11d43d0ff5e2ae5ec29669b5
       before_script:
         - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter

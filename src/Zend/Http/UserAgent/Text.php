@@ -80,8 +80,6 @@ class Zend_Http_UserAgent_Text extends Zend_Http_UserAgent_AbstractDevice
 
     /**
      * Determine supported image formats
-     *
-     * @return null
      */
     public function getImageFormatSupport()
     {

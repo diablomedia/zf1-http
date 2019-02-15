@@ -18,3 +18,6 @@ parameters:
         - '#Variable \$.+ might not be defined\.#'
         # No idea where this variable came from, put a comment in
         - '#Variable \$headers in isset\(\) is never defined\.#'
+        -
+            message: '#Offset \*NEVER\* does not exist on array\(\)\.#'
+            path: %currentWorkingDirectory%/src/Zend/Http/Response.php
