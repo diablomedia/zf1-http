@@ -18,6 +18,8 @@ parameters:
         - '#Variable \$.+ might not be defined\.#'
         # No idea where this variable came from, put a comment in
         - '#Variable \$headers in isset\(\) is never defined\.#'
+        # This appears to be a bug in PHPStan, filed:
+        # https://github.com/phpstan/phpstan/issues/2022
         -
-            message: '#Offset \*NEVER\* does not exist on array\(\)\.#'
-            path: %currentWorkingDirectory%/src/Zend/Http/Response.php
+            message: '#Method Zend_Http_Client::encodeAuthHeader\(\) should return string but returns null\.#'
+            path: %currentWorkingDirectory%/src/Zend/Http/Client.php
