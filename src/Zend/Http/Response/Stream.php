@@ -207,17 +207,16 @@ class Zend_Http_Response_Stream extends Zend_Http_Response
      *
      * Function reads the remainder of the body from the stream and closes the stream.
      *
-     * @return string
+     * @return void
      */
     protected function readStream()
     {
         if (!is_resource($this->stream)) {
-            return '';
+            return;
         }
 
-        // @todo Where does $headers come from?
-        if (isset($headers['content-length'])) {
-            $this->body = stream_get_contents($this->stream, $headers['content-length']);
+        if (isset($this->headers['content-length'])) {
+            $this->body = stream_get_contents($this->stream, $this->headers['content-length']);
         } else {
             $this->body = stream_get_contents($this->stream);
         }

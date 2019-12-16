@@ -16,5 +16,3 @@ parameters:
         # Not used anywhere else, not sure
         - '#Access to an undefined property Zend_Http_UserAgent_AbstractDevice::\$device_os\.#'
         - '#Variable \$.+ might not be defined\.#'
-        # No idea where this variable came from, put a comment in
-        - '#Variable \$headers in isset\(\) is never defined\.#'
