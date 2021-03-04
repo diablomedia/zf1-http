@@ -79,7 +79,7 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
      * Set up the test case
      *
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') &&
             Zend_Uri_Http::check(TESTS_ZEND_HTTP_CLIENT_BASEURI)) {
@@ -108,7 +108,7 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
      * Clean up the test environment
      *
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->client   = null;
         $this->_adapter = null;
@@ -500,7 +500,7 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
 
         $res = $this->client->request('POST');
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             serialize($params) . "\n" . serialize($params),
             $res->getBody(),
             'returned body does not contain all GET and POST parameters (it should!)'
@@ -581,10 +581,10 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
         $body = strtolower($res->getBody());
 
         foreach ($headers as $key => $val) {
-            $this->assertContains(strtolower("$key: $val"), $body);
+            $this->assertStringContainsString(strtolower("$key: $val"), $body);
         }
 
-        $this->assertContains(strtolower($acceptHeader), $body);
+        $this->assertStringContainsString(strtolower($acceptHeader), $body);
     }
 
     /**
@@ -613,9 +613,9 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
 
         foreach ($headers as $key => $val) {
             if (is_string($key)) {
-                $this->assertContains(strtolower("$key: $val"), $body);
+                $this->assertStringContainsString(strtolower("$key: $val"), $body);
             } else {
-                $this->assertContains(strtolower($val), $body);
+                $this->assertStringContainsString(strtolower($val), $body);
             }
         }
     }
@@ -653,7 +653,7 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
                 $val = implode(', ', $val);
             }
 
-            $this->assertContains(strtolower("$key: $val"), $body);
+            $this->assertStringContainsString(strtolower("$key: $val"), $body);
         }
     }
 
@@ -704,8 +704,8 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
         $this->assertEquals(3, $this->client->getRedirectionsCount(), 'Redirection counter is not as expected');
 
         // Make sure the body *does* contain the set parameters
-        $this->assertContains('swallow', $res->getBody());
-        $this->assertContains('Camelot', $res->getBody());
+        $this->assertStringContainsString('swallow', $res->getBody());
+        $this->assertStringContainsString('Camelot', $res->getBody());
     }
 
     /**
@@ -1163,7 +1163,7 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
         $response = $this->client->request();
 
         $this->assertTrue($response instanceof Zend_Http_Response_Stream, 'Request did not return stream response!');
-        $this->assertInternalType('resource', $response->getStream(), 'Request does not contain stream!');
+        $this->assertIsResource($response->getStream(), 'Request does not contain stream!');
 
         $stream_name = $response->getStreamName();
 
@@ -1188,7 +1188,7 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
         $response = $this->client->request();
 
         $this->assertTrue($response instanceof Zend_Http_Response_Stream, 'Request did not return stream response!');
-        $this->assertInternalType('resource', $response->getStream(), 'Request does not contain stream!');
+        $this->assertIsResource($response->getStream(), 'Request does not contain stream!');
 
         $body = $response->getBody();
 
@@ -1209,7 +1209,7 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
         $response = $this->client->request();
 
         $this->assertTrue($response instanceof Zend_Http_Response_Stream, 'Request did not return stream response!');
-        $this->assertInternalType('resource', $response->getStream(), 'Request does not contain stream!');
+        $this->assertIsResource($response->getStream(), 'Request does not contain stream!');
 
         $this->assertEquals($outfile, $response->getStreamName());
 
@@ -1270,8 +1270,8 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
         $response = $this->client->request();
         $request  = $this->client->getLastRequest();
 
-        $this->assertContains('text/html; charset=ISO-8859-1', $request, $request);
-        $this->assertContains('REQUEST_METHOD: PUT', $response->getBody(), $response->getBody());
+        $this->assertStringContainsString('text/html; charset=ISO-8859-1', $request, $request);
+        $this->assertStringContainsString('REQUEST_METHOD: PUT', $response->getBody(), $response->getBody());
     }
 
 
@@ -1285,7 +1285,7 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
         $this->client->setRawData($data, 'text/plain');
         $this->client->setMethod(Zend_Http_Client::PUT);
         $response = $this->client->request();
-        $this->assertContains('REQUEST_METHOD: PUT', $response->getBody(), $response->getBody());
+        $this->assertStringContainsString('REQUEST_METHOD: PUT', $response->getBody(), $response->getBody());
 
         $this->client->resetParameters(true);
         $this->client->setUri($this->baseuri . 'ZF10645-PutContentType.php');

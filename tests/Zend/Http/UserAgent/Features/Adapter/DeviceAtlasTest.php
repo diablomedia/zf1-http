@@ -29,7 +29,7 @@
  */
 class Zend_Http_UserAgent_Features_Adapter_DeviceAtlasTest extends PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!constant('TESTS_ZEND_HTTP_USERAGENT_DEVICEATLAS_LIB_DIR')
             || !constant('TESTS_ZEND_HTTP_USERAGENT_DEVICEATLAS_DATA_FILE')

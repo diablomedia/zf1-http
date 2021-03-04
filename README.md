@@ -1,6 +1,6 @@
-Zend Framework 1 - Http
-============================
-[![Build Status](https://travis-ci.com/diablomedia/zf1-http.svg?branch=master)](https://travis-ci.com/diablomedia/zf1-http)
+# Zend Framework 1 - Http
+
+[![Build](https://github.com/diablomedia/zf1-http/workflows/Build/badge.svg?event=push)](https://github.com/diablomedia/zf1-http/actions?query=workflow%3ABuild+event%3Apush)
 [![codecov](https://codecov.io/gh/diablomedia/zf1-http/branch/master/graph/badge.svg)](https://codecov.io/gh/diablomedia/zf1-http)
 [![Latest Stable Version](https://poser.pugx.org/diablomedia/zendframework1-http/v/stable)](https://packagist.org/packages/diablomedia/zendframework1-http)
 [![Total Downloads](https://poser.pugx.org/diablomedia/zendframework1-http/downloads)](https://packagist.org/packages/diablomedia/zendframework1-http)

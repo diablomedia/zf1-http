@@ -29,7 +29,7 @@
  */
 class Zend_Http_UserAgent_Features_Adapter_TeraWurflTest extends PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!constant('TESTS_ZEND_HTTP_USERAGENT_TERAWURFL_LIB_DIR')) {
             $this->markTestSkipped('Requires TERAWURFL library');

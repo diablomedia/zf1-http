@@ -54,7 +54,7 @@ class Zend_Http_Client_CurlTest extends Zend_Http_Client_CommonHttpTests
         'adapter' => 'Zend_Http_Client_Adapter_Curl'
     );
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!extension_loaded('curl')) {
             $this->markTestSkipped('cURL is not installed, marking all Http Client Curl Adapter tests skipped.');
@@ -301,7 +301,7 @@ class Zend_Http_Client_CurlTest extends Zend_Http_Client_CommonHttpTests
         $adapter->setConfig(array('timeout' => 2, 'maxredirects' => 1));
         $adapter->connect('http://framework.zend.com');
 
-        $this->assertInternalType('resource', $adapter->getHandle());
+        $this->assertIsResource($adapter->getHandle());
     }
 
     /**

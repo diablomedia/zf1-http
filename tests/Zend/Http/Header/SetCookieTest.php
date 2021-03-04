@@ -98,7 +98,7 @@ class Zend_Http_Header_SetCookieTest extends PHPUnit\Framework\TestCase
             . 'someothername=someothervalue; Domain=docs.foo.com; Path=/accounts;'
             . 'Expires=Wed, 13-Jan-2021 22:23:01 GMT; Secure; HttpOnly'
         );
-        $this->assertInternalType('array', $setCookieHeaders);
+        $this->assertIsArray($setCookieHeaders);
 
         $setCookieHeader = $setCookieHeaders[0];
         $this->assertTrue($setCookieHeader instanceof Zend_Http_Header_SetCookie);

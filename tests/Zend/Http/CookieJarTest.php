@@ -150,7 +150,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
         $cobjects = $jar->getAllCookies();
 
         foreach ($cobjects as $id => $cookie) {
-            $this->assertContains((string) $cookie, $cookies[$id]);
+            $this->assertStringContainsString((string) $cookie, $cookies[$id]);
         }
     }
 
@@ -419,17 +419,17 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
         $this->assertCount(8, $jar->getAllCookies(), 'Cookie count is expected to be 8');
 
         $cookies = $jar->getMatchingCookies('http://www.foo.com/path/file.txt', true, Zend_Http_CookieJar::COOKIE_STRING_ARRAY);
-        $this->assertInternalType('array', $cookies, '$cookies is expected to be an array, but it is not');
-        $this->assertInternalType('string', $cookies[0], '$cookies[0] is expected to be a string');
+        $this->assertIsArray($cookies, '$cookies is expected to be an array, but it is not');
+        $this->assertIsString($cookies[0], '$cookies[0] is expected to be a string');
         ;
 
         $cookies = $jar->getMatchingCookies('http://www.foo.com/path/file.txt', true, Zend_Http_CookieJar::COOKIE_STRING_CONCAT);
-        $this->assertInternalType('string', $cookies, '$cookies is expected to be a string');
+        $this->assertIsString($cookies, '$cookies is expected to be a string');
         $expected = 'foo1=bar1;foo2=bar2;foo4=bar4;foo7=bar7;';
         $this->assertEquals($expected, $cookies, 'Concatenated string is not as expected');
 
         $cookies = $jar->getMatchingCookies('http://www.foo.com/path/file.txt', true, Zend_Http_CookieJar::COOKIE_STRING_CONCAT_STRICT);
-        $this->assertInternalType('string', $cookies, '$cookies is expected to be a string');
+        $this->assertIsString($cookies, '$cookies is expected to be a string');
         $expected = 'foo1=bar1; foo2=bar2; foo4=bar4; foo7=bar7';
         $this->assertEquals($expected, $cookies, 'Concatenated string is not as expected');
     }
@@ -504,7 +504,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
         }
         $cookies = $jar->getMatchingCookies('http://www.example.com/a/b/file.txt');
 
-        $this->assertInternalType('array', $cookies);
+        $this->assertIsArray($cookies);
         $this->assertCount(2, $cookies);
     }
 
