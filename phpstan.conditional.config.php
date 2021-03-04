@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 $config = array();
 
-if (PHP_VERSION_ID >= 8_00_00) {
+if (PHP_VERSION_ID >= 80000) {
     // Change of signature in PHP 8.0
     $config['parameters']['ignoreErrors'][] = array(
         'message' => '~Property Zend_Http_Client_Adapter_Curl::\$_curl \(resource\|null\) does not accept CurlHandle\.~',
