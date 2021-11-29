@@ -117,7 +117,7 @@ class Zend_Http_UserAgentTest extends PHPUnit\Framework\TestCase
         $this->assertTrue($device instanceof Zend_Http_UserAgent_Mobile);
         $this->assertEquals('mobile', $userAgent->getBrowserType());
         $this->assertEquals('iPhone', $device->getFeature('mobile_browser'));
-        $this->assertRegExp('/iPhone/', $device->getFeature('device_os'));
+        $this->assertMatchesRegularExpression('/iPhone/', $device->getFeature('device_os'));
     }
 
     public function testUserAgentDefineStorage()
