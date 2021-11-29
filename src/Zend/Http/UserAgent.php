@@ -171,6 +171,11 @@ class Zend_Http_UserAgent implements Serializable
      */
     public function serialize()
     {
+        return serialize($this->__serialize());
+    }
+
+    public function __serialize(): array
+    {
         $device = $this->getDevice();
         $spec   = array(
             'browser_type' => $this->_browserType,
@@ -180,7 +185,8 @@ class Zend_Http_UserAgent implements Serializable
             'user_agent'   => $this->getServerValue('http_user_agent'),
             'http_accept'  => $this->getServerValue('http_accept'),
         );
-        return serialize($spec);
+
+        return $spec;
     }
 
     /**
@@ -191,18 +197,21 @@ class Zend_Http_UserAgent implements Serializable
      */
     public function unserialize($serialized)
     {
-        $spec = unserialize($serialized);
+        $this->__unserialize(unserialize($serialized));
+    }
 
-        $this->setOptions($spec);
+    public function __unserialize(array $serialized): void
+    {
+        $this->setOptions($serialized);
 
         // Determine device class and ensure the class is loaded
-        $deviceClass = $spec['device_class'];
+        $deviceClass = $serialized['device_class'];
         if (!class_exists($deviceClass)) {
             $this->_getUserAgentDevice($this->getBrowserType());
         }
 
         // Get device specification and instantiate
-        $deviceSpec            = unserialize($spec['device']);
+        $deviceSpec            = unserialize($serialized['device']);
         $deviceSpec['_config'] = $this->getConfig();
         $deviceSpec['_server'] = $this->getServer();
         $this->_device         = new $deviceClass($deviceSpec);
