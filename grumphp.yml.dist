@@ -10,6 +10,7 @@ grumphp:
             config: .php-cs-fixer.php
         phpstan:
             configuration: phpstan.neon
+            memory_limit: 768M
         phpunit:
             metadata:
                 priority: 100
