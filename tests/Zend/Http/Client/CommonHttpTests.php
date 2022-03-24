@@ -1162,7 +1162,7 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
 
         $response = $this->client->request();
 
-        $this->assertTrue($response instanceof Zend_Http_Response_Stream, 'Request did not return stream response!');
+        $this->assertInstanceOf(Zend_Http_Response_Stream::class, $response, 'Request did not return stream response!');
         $this->assertIsResource($response->getStream(), 'Request does not contain stream!');
 
         $stream_name = $response->getStreamName();
@@ -1187,7 +1187,7 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
 
         $response = $this->client->request();
 
-        $this->assertTrue($response instanceof Zend_Http_Response_Stream, 'Request did not return stream response!');
+        $this->assertInstanceOf(Zend_Http_Response_Stream::class, $response, 'Request did not return stream response!');
         $this->assertIsResource($response->getStream(), 'Request does not contain stream!');
 
         $body = $response->getBody();
@@ -1208,7 +1208,7 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit\Framework\TestCa
 
         $response = $this->client->request();
 
-        $this->assertTrue($response instanceof Zend_Http_Response_Stream, 'Request did not return stream response!');
+        $this->assertInstanceOf(Zend_Http_Response_Stream::class, $response, 'Request did not return stream response!');
         $this->assertIsResource($response->getStream(), 'Request does not contain stream!');
 
         $this->assertEquals($outfile, $response->getStreamName());

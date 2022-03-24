@@ -77,7 +77,7 @@ class Zend_Http_Client_StaticTest extends PHPUnit\Framework\TestCase
         $this->_client->setUri($uristr);
 
         $uri = $this->_client->getUri();
-        $this->assertTrue($uri instanceof Zend_Uri_Http, 'Returned value is not a Uri object as expected');
+        $this->assertInstanceOf(Zend_Uri_Http::class, $uri, 'Returned value is not a Uri object as expected');
         $this->assertEquals($uri->__toString(), $uristr, 'Returned Uri object does not hold the expected URI');
 
         $uri = $this->_client->getUri(true);
@@ -96,7 +96,7 @@ class Zend_Http_Client_StaticTest extends PHPUnit\Framework\TestCase
         $this->_client->setUri($uriobj);
 
         $uri = $this->_client->getUri();
-        $this->assertTrue($uri instanceof Zend_Uri_Http, 'Returned value is not a Uri object as expected');
+        $this->assertInstanceOf(Zend_Uri_Http::class, $uri, 'Returned value is not a Uri object as expected');
         $this->assertEquals($uri, $uriobj, 'Returned object is not the excepted Uri object');
     }
 
@@ -248,7 +248,7 @@ class Zend_Http_Client_StaticTest extends PHPUnit\Framework\TestCase
         $jar = $this->_client->getCookieJar();
 
         // Check we got the right cookiejar
-        $this->assertTrue($jar instanceof Zend_Http_CookieJar, '$jar is not an instance of Zend_Http_CookieJar as expected');
+        $this->assertInstanceOf(Zend_Http_CookieJar::class, $jar, '$jar is not an instance of Zend_Http_CookieJar as expected');
         $this->assertEquals(count($jar->getAllCookies()), 2, '$jar does not contain 2 cookies as expected');
     }
 

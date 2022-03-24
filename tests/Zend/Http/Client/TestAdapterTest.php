@@ -203,7 +203,7 @@ class Zend_Http_Client_TestAdapterTest extends PHPUnit\Framework\TestCase
                 $this->fail();
             } catch (Exception $e) {
                 $class = 'Zend_Http_Client_Adapter_Exception';
-                $this->assertTrue($e instanceof $class);
+                $this->assertInstanceOf($class, $e);
                 $this->assertMatchesRegularExpression('/out of range/i', $e->getMessage());
             }
         }

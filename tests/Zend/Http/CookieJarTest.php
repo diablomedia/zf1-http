@@ -55,7 +55,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
 
         $jar->addCookie('foo=bar; domain=example.com');
         $cookie = $jar->getCookie('http://example.com/', 'foo');
-        $this->assertTrue($cookie instanceof Zend_Http_Cookie, '$cookie is expected to be a Cookie object');
+        $this->assertInstanceOf(Zend_Http_Cookie::class, $cookie, '$cookie is expected to be a Cookie object');
         $this->assertEquals('bar', $cookie->getValue(), 'Cookie value is expected to be "bar"');
 
         $jar->addCookie('cookie=brownie; domain=geekz.co.uk;');
@@ -214,7 +214,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
 
         $cobj = $jar->getCookie('http://www.example.com/tests/', 'foo');
 
-        $this->assertTrue($cobj instanceof Zend_Http_Cookie, '$cobj is not a Cookie object');
+        $this->assertInstanceOf(Zend_Http_Cookie::class, $cobj, '$cobj is not a Cookie object');
         $this->assertEquals($cookie->getName(), $cobj->getName(), 'Cookie name is not as expected');
         $this->assertEquals($cookie->getValue(), $cobj->getValue(), 'Cookie value is not as expected');
         $this->assertEquals($cookie->getDomain(), $cobj->getDomain(), 'Cookie domain is not as expected');
@@ -320,7 +320,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
             $jar->addCookie($cookie);
         }
         $cookies = $jar->getMatchingCookies($url);
-        $this->assertEquals($expected, count($cookies), $jar->getMatchingCookies($url, true, Zend_Http_CookieJar::COOKIE_STRING_CONCAT));
+        $this->assertCount($expected, $cookies, $jar->getMatchingCookies($url, true, Zend_Http_CookieJar::COOKIE_STRING_CONCAT));
     }
 
     public static function cookieMatchTestProvider()
@@ -468,7 +468,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
 
         $jar = Zend_Http_CookieJar::fromResponse($response, 'http://www.example.com');
 
-        $this->assertTrue($jar instanceof Zend_Http_CookieJar, '$jar is not an instance of CookieJar as expected');
+        $this->assertInstanceOf(Zend_Http_CookieJar::class, $jar, '$jar is not an instance of CookieJar as expected');
         $this->assertCount(1, $jar->getAllCookies(), 'CookieJar expected to contain 1 cookie');
     }
 
@@ -484,7 +484,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
 
         $jar = Zend_Http_CookieJar::fromResponse($response, 'http://www.example.com');
 
-        $this->assertTrue($jar instanceof Zend_Http_CookieJar, '$jar is not an instance of CookieJar as expected');
+        $this->assertInstanceOf(Zend_Http_CookieJar::class, $jar, '$jar is not an instance of CookieJar as expected');
         $this->assertCount(3, $jar->getAllCookies(), 'CookieJar expected to contain 3 cookies');
     }
 
@@ -519,7 +519,7 @@ class Zend_Http_CookieJarTest extends PHPUnit\Framework\TestCase
             $jar->addCookie($cookie);
         }
         foreach ($jar as $cookie) {
-            $this->assertTrue($cookie instanceof Zend_Http_Cookie);
+            $this->assertInstanceOf(Zend_Http_Cookie::class, $cookie);
         }
         $this->assertCount(2, $jar);
         $this->assertFalse($jar->isEmpty());

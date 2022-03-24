@@ -114,7 +114,7 @@ class Zend_Http_UserAgentTest extends PHPUnit\Framework\TestCase
 
         $userAgent = new Zend_Http_UserAgent($config);
         $device    = $userAgent->getDevice();
-        $this->assertTrue($device instanceof Zend_Http_UserAgent_Mobile);
+        $this->assertInstanceOf(Zend_Http_UserAgent_Mobile::class, $device);
         $this->assertEquals('mobile', $userAgent->getBrowserType());
         $this->assertEquals('iPhone', $device->getFeature('mobile_browser'));
         $this->assertMatchesRegularExpression('/iPhone/', $device->getFeature('device_os'));
@@ -320,8 +320,9 @@ class Zend_Http_UserAgentTest extends PHPUnit\Framework\TestCase
         $ua = new Zend_Http_UserAgent();
         $ua->setPluginLoader('device', 'Zend_Http_TestAsset_TestPluginLoader');
         $loader = $ua->getPluginLoader('device');
-        $this->assertTrue(
-            $loader instanceof Zend_Http_TestAsset_TestPluginLoader
+        $this->assertInstanceOf(
+            Zend_Http_TestAsset_TestPluginLoader::class,
+            $loader
         );
     }
 
@@ -378,12 +379,14 @@ class Zend_Http_UserAgentTest extends PHPUnit\Framework\TestCase
         );
         $ua           = new Zend_Http_UserAgent($this->config);
         $deviceLoader = $ua->getPluginLoader('device');
-        $this->assertTrue(
-            $deviceLoader instanceof Zend_Http_TestAsset_TestPluginLoader
+        $this->assertInstanceOf(
+            Zend_Http_TestAsset_TestPluginLoader::class,
+            $deviceLoader
         );
         $storageLoader = $ua->getPluginLoader('storage');
-        $this->assertTrue(
-            $storageLoader instanceof Zend_Http_TestAsset_TestPluginLoader
+        $this->assertInstanceOf(
+            Zend_Http_TestAsset_TestPluginLoader::class,
+            $storageLoader
         );
         $this->assertNotSame($deviceLoader, $storageLoader);
     }
@@ -398,7 +401,7 @@ class Zend_Http_UserAgentTest extends PHPUnit\Framework\TestCase
         $this->config['user_agent'] = 'desktop';
         $ua                         = new Zend_Http_UserAgent($this->config);
         $device                     = $ua->getDevice();
-        $this->assertTrue($device instanceof Zend_Http_TestAsset_DesktopDevice);
+        $this->assertInstanceOf(Zend_Http_TestAsset_DesktopDevice::class, $device);
     }
 
     public function testAllowsSpecifyingCustomDeviceViaPrefixPath()
@@ -412,7 +415,7 @@ class Zend_Http_UserAgentTest extends PHPUnit\Framework\TestCase
         $this->config['user_agent'] = 'desktop';
         $ua                         = new Zend_Http_UserAgent($this->config);
         $device                     = $ua->getDevice();
-        $this->assertTrue($device instanceof Zend_Http_TestAsset_Device_Desktop);
+        $this->assertInstanceOf(Zend_Http_TestAsset_Device_Desktop::class, $device);
     }
 
     public function testShouldRaiseExceptionOnInvalidDeviceClass()
@@ -466,9 +469,9 @@ class Zend_Http_UserAgentTest extends PHPUnit\Framework\TestCase
         $this->config['user_agent']         = 'desktop';
         $ua                                 = new Zend_Http_UserAgent($this->config);
         $storage                            = $ua->getStorage();
-        $this->assertTrue($storage instanceof Zend_Http_TestAsset_PopulatedStorage);
+        $this->assertInstanceOf(Zend_Http_TestAsset_PopulatedStorage::class, $storage);
         $device = $ua->getDevice();
-        $this->assertTrue($device instanceof Zend_Http_TestAsset_DesktopDevice);
+        $this->assertInstanceOf(Zend_Http_TestAsset_DesktopDevice::class, $device);
     }
 
     public function testCanClearStorage()
@@ -484,7 +487,7 @@ class Zend_Http_UserAgentTest extends PHPUnit\Framework\TestCase
         // Prime storage by retrieving device
         $device  = $ua->getDevice();
         $storage = $ua->getStorage();
-        $this->assertTrue($storage instanceof Zend_Http_UserAgent_Storage);
+        $this->assertInstanceOf(Zend_Http_UserAgent_Storage::class, $storage);
         $this->assertFalse($storage->isEmpty());
         $ua->clearStorage();
         $this->assertTrue($storage->isEmpty());

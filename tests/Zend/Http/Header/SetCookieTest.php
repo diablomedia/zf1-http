@@ -67,13 +67,13 @@ class Zend_Http_Header_SetCookieTest extends PHPUnit\Framework\TestCase
     public function testSetCookieFromStringCreatesValidSetCookieHeader()
     {
         $setCookieHeader = Zend_Http_Header_SetCookie::fromString('Set-Cookie: xxx');
-        $this->assertTrue($setCookieHeader instanceof Zend_Http_Header_SetCookie);
+        $this->assertInstanceOf(Zend_Http_Header_SetCookie::class, $setCookieHeader);
     }
 
     public function testSetCookieFromStringCanCreateSingleHeader()
     {
         $setCookieHeader = Zend_Http_Header_SetCookie::fromString('Set-Cookie: myname=myvalue');
-        $this->assertTrue($setCookieHeader instanceof Zend_Http_Header_SetCookie);
+        $this->assertInstanceOf(Zend_Http_Header_SetCookie::class, $setCookieHeader);
         $this->assertEquals('myname', $setCookieHeader->getName());
         $this->assertEquals('myvalue', $setCookieHeader->getValue());
 
@@ -81,7 +81,7 @@ class Zend_Http_Header_SetCookieTest extends PHPUnit\Framework\TestCase
             'set-cookie: myname=myvalue; Domain=docs.foo.com; Path=/accounts;'
             . 'Expires=Wed, 13-Jan-2021 22:23:01 GMT; Secure; HttpOnly'
         );
-        $this->assertTrue($setCookieHeader instanceof Zend_Http_Header_SetCookie);
+        $this->assertInstanceOf(Zend_Http_Header_SetCookie::class, $setCookieHeader);
         $this->assertEquals('myname', $setCookieHeader->getName());
         $this->assertEquals('myvalue', $setCookieHeader->getValue());
         $this->assertEquals('docs.foo.com', $setCookieHeader->getDomain());
@@ -101,12 +101,12 @@ class Zend_Http_Header_SetCookieTest extends PHPUnit\Framework\TestCase
         $this->assertIsArray($setCookieHeaders);
 
         $setCookieHeader = $setCookieHeaders[0];
-        $this->assertTrue($setCookieHeader instanceof Zend_Http_Header_SetCookie);
+        $this->assertInstanceOf(Zend_Http_Header_SetCookie::class, $setCookieHeader);
         $this->assertEquals('myname', $setCookieHeader->getName());
         $this->assertEquals('myvalue', $setCookieHeader->getValue());
 
         $setCookieHeader = $setCookieHeaders[1];
-        $this->assertTrue($setCookieHeader instanceof Zend_Http_Header_SetCookie);
+        $this->assertInstanceOf(Zend_Http_Header_SetCookie::class, $setCookieHeader);
         $this->assertEquals('someothername', $setCookieHeader->getName());
         $this->assertEquals('someothervalue', $setCookieHeader->getValue());
         $this->assertEquals('Wed, 13-Jan-2021 22:23:01 GMT', $setCookieHeader->getExpires());
