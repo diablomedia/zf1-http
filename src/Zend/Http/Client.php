@@ -239,7 +239,7 @@ class Zend_Http_Client
      * This variable is populated the first time _detectFileMimeType is called
      * and is then reused on every call to this method
      *
-     * @var resource
+     * @var resource|false
      */
     protected static $_fileInfoDb = null;
 
