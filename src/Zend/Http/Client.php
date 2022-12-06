@@ -415,7 +415,7 @@ class Zend_Http_Client
         }
 
         // Make sure the name is valid if we are in strict mode
-        if ($this->config['strict'] && (! preg_match('/^[a-zA-Z0-9-]+$/', $name))) {
+        if ($this->config['strict'] && (! preg_match('/^[a-zA-Z0-9-_]+$/', $name))) {
             throw new Zend_Http_Client_Exception("{$name} is not a valid HTTP header name");
         }
 
