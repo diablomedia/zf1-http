@@ -339,7 +339,6 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
          */
         if ($statusCode == 304 || $statusCode == 204 ||
             $this->method == Zend_Http_Client::HEAD) {
-
             // Close the connection if requested to do so by the server
             if (isset($headers['connection']) && $headers['connection'] == 'close') {
                 $this->close();
@@ -413,9 +412,8 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
             if ($this->out_stream) {
                 $response = str_ireplace("Transfer-Encoding: chunked\r\n", '', $response);
             }
-            // Else, if we got the content-length header, read this number of bytes
+        // Else, if we got the content-length header, read this number of bytes
         } elseif (isset($headers['content-length'])) {
-
             // If we got more than one Content-Length header (see ZF-9404) use
             // the last value sent
             if (is_array($headers['content-length'])) {
@@ -428,8 +426,8 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
             $chunk       = '';
 
             for ($read_to = $current_pos + $contentLength;
-                 $read_to > $current_pos;
-                 $current_pos = ftell($this->socket)) {
+                $read_to > $current_pos;
+                $current_pos = ftell($this->socket)) {
                 if ($this->out_stream) {
                     if (@stream_copy_to_stream($this->socket, $this->out_stream, $read_to - $current_pos) == 0) {
                         $this->_checkSocketReadTimeout();
@@ -451,7 +449,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
                 }
             }
 
-            // Fallback: just read the response until EOF
+        // Fallback: just read the response until EOF
         } else {
             do {
                 if ($this->out_stream) {

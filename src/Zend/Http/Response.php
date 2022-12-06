@@ -253,14 +253,13 @@ class Zend_Http_Response
 
         // Decode the body if it was transfer-encoded
         switch (strtolower($this->getHeader('transfer-encoding') ?? '')) {
-
             // Handle chunked body
             case 'chunked':
                 $body = self::decodeChunkedBody($this->body);
                 break;
 
-            // No transfer encoding, or unknown encoding extension:
-            // return body as is
+                // No transfer encoding, or unknown encoding extension:
+                // return body as is
             default:
                 $body = $this->body;
                 break;
@@ -268,13 +267,12 @@ class Zend_Http_Response
 
         // Decode any content-encoding (gzip or deflate) if needed
         switch (strtolower($this->getHeader('content-encoding') ?? '')) {
-
             // Handle gzip encoding
             case 'gzip':
                 $body = self::decodeGzip($body);
                 break;
 
-            // Handle deflate encoding
+                // Handle deflate encoding
             case 'deflate':
                 $body = self::decodeDeflate($body);
                 break;

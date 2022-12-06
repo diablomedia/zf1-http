@@ -30,7 +30,6 @@
  */
 class Zend_Http_UserAgent_Desktop extends Zend_Http_UserAgent_AbstractDevice
 {
-
     /**
      * Used by default : must be always true
      *

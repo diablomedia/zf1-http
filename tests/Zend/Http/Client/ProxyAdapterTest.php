@@ -203,7 +203,6 @@ class Zend_Http_Client_ProxyAdapterTest extends Zend_Http_Client_SocketTest
  */
 class ZF3189_ProxyAdapter extends Zend_Http_Client_Adapter_Proxy
 {
-
     /**
      * Retrieve the request data from last CONNECT handshake
      * @return string

@@ -36,7 +36,6 @@
  */
 class Zend_Http_Header_SetCookieTest extends PHPUnit\Framework\TestCase
 {
-
     /**
      * @group ZF2-254
      */

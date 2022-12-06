@@ -29,8 +29,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5.10",
-        "phpstan/phpstan": "1.5.7",
-        "friendsofphp/php-cs-fixer": "3.8.0",
+        "phpstan/phpstan": "1.9.2",
+        "friendsofphp/php-cs-fixer": "3.13.0",
         "maglnet/composer-require-checker": "^3.0.0",
         "phpro/grumphp-shim": "^1.5.0"
     },
@@ -52,5 +52,10 @@
         "ext-curl": "Required by the Zend_Http_Client_Adapter_Curl adapter",
         "ext-zlib": "Required to compress/decompress gzipped request/response",
         "ext-fileinfo": "If installed, will be used for mime type detection"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpro/grumphp-shim": true
+        }
     }
 }

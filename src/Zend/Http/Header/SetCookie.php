@@ -36,7 +36,6 @@
  */
 class Zend_Http_Header_SetCookie
 {
-
     /**
      * Cookie name
      *

@@ -31,7 +31,6 @@
 
 class Zend_Http_UserAgent_Bot extends Zend_Http_UserAgent_AbstractDevice
 {
-
     /**
      * User Agent Signatures
      *
