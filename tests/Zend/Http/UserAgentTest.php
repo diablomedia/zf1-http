@@ -36,6 +36,9 @@ require_once dirname(__FILE__) . '/TestAsset/PopulatedStorage.php';
  */
 class Zend_Http_UserAgentTest extends PHPUnit\Framework\TestCase
 {
+    protected $server;
+    protected $config;
+
     public function setUp(): void
     {
         $this->server                         = array();

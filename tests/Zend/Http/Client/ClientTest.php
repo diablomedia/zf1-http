@@ -32,6 +32,8 @@
  */
 class Zend_Http_Client_ClientTest extends PHPUnit\Framework\TestCase
 {
+    protected $client;
+
     /**
      * Set up the test case
      *

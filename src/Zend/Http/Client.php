@@ -1476,7 +1476,7 @@ class Zend_Http_Client
                 /**
                  * @todo Implement digest authentication
                  */
-            //    break;
+                //    break;
 
             default:
                 throw new Zend_Http_Client_Exception("Not a supported HTTP authentication type: '$type'");
