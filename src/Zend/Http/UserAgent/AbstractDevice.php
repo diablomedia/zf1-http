@@ -713,7 +713,7 @@ abstract class Zend_Http_UserAgent_AbstractDevice implements Zend_Http_UserAgent
                 // Opera X.XX
                 if (isset($result['others']['detail'][1][1])) {
                     $result['browser_version'] = $result['others']['detail'][1][1];
-                // Opera/X.XX
+                    // Opera/X.XX
                 } elseif (isset($result['others']['detail'][0][2])) {
                     $result['browser_version'] = $result['others']['detail'][0][2];
                 }

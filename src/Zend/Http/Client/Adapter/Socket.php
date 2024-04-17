@@ -412,7 +412,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
             if ($this->out_stream) {
                 $response = str_ireplace("Transfer-Encoding: chunked\r\n", '', $response);
             }
-        // Else, if we got the content-length header, read this number of bytes
+            // Else, if we got the content-length header, read this number of bytes
         } elseif (isset($headers['content-length'])) {
             // If we got more than one Content-Length header (see ZF-9404) use
             // the last value sent
@@ -449,7 +449,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
                 }
             }
 
-        // Fallback: just read the response until EOF
+            // Fallback: just read the response until EOF
         } else {
             do {
                 if ($this->out_stream) {

@@ -1,10 +1,17 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" beStrictAboutTestsThatDoNotTestAnything="true" backupGlobals="true" stderr="true" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage includeUncoveredFiles="true">
-    <include>
-      <directory suffix=".php">./src</directory>
-    </include>
-  </coverage>
+<phpunit 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  beStrictAboutTestsThatDoNotTestAnything="true" 
+  backupGlobals="true" 
+  stderr="true" 
+  colors="true" 
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" 
+  cacheDirectory=".phpunit.cache"
+  displayDetailsOnTestsThatTriggerDeprecations="true" 
+  displayDetailsOnTestsThatTriggerErrors="true" 
+  displayDetailsOnTestsThatTriggerNotices="true" 
+  displayDetailsOnTestsThatTriggerWarnings="true" 
+>
   <php>
     <const name="TESTS_ZEND_HTTP_CLIENT_BASEURI" value="false"/>
     <const name="TESTS_ZEND_HTTP_CLIENT_HTTP_PROXY" value="false"/>
@@ -22,4 +29,9 @@
       <directory>./tests</directory>
     </testsuite>
   </testsuites>
+  <source>
+    <include>
+      <directory suffix=".php">./src</directory>
+    </include>
+  </source>
 </phpunit>

@@ -579,7 +579,7 @@ class Zend_Http_Client
                 $this->getUri()->setUsername('');
                 $this->getUri()->setPassword('');
             }
-        // Else, set up authentication
+            // Else, set up authentication
         } else {
             // Check we got a proper authentication type
             if (! defined('self::AUTH_' . strtoupper($type))) {
@@ -1113,7 +1113,7 @@ class Zend_Http_Client
                     if (strpos($location, '/') === 0) {
                         $this->uri->setPath($location);
 
-                    // Else, assume we have a relative path
+                        // Else, assume we have a relative path
                     } else {
                         // Get the current path directory, removing any trailing slashes
                         $path = $this->uri->getPath();
