@@ -1,5 +1,3 @@
-includes:
-    - phpstan.conditional.config.php
 parameters:
     level: 3
     paths:
@@ -18,3 +16,8 @@ parameters:
         # Not used anywhere else, not sure
         - '#Access to an undefined property Zend_Http_UserAgent_AbstractDevice::\$device_os\.#'
         - '#Variable \$.+ might not be defined\.#'
+        # ignoring
+        -
+            message: '#Property Zend_Http_Client_Adapter_Curl::\$_curl \(resource\|null\) does not accept \(CurlHandle\|false\)\.#'
+            count: 1
+            path: src/Zend/Http/Client/Adapter/Curl.php
